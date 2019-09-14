@@ -1,0 +1,19 @@
+.inputs-container {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(106, 199, 0);
+}
+
+.new-product-inputs {
+    width: 40%;
+    height: 50px;
+    background: transparent;
+    border: 1px solid black;
+}
+
+.new-product-inputs::placeholder {
+    color: rgba(0, 0, 0, 0.600);
+}
