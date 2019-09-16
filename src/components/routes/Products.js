@@ -5,7 +5,7 @@ export default class Products extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            addItem: {
+            newItem: {
                 name: "",
                 amount: 0
             },
@@ -15,10 +15,16 @@ export default class Products extends React.Component{
         }
 
         this.toggleInputs = this.toggleInputs.bind(this);
+        this.minus = this.minus.bind(this);
+        this.plus = this.plus.bind(this);
     }
 
-    addNewItem() {
+    minus() {
+        this.setState({ newItem: { ...this.state.newItem, amount: this.state.newItem.amount - 1}})
+    }
 
+    plus() {
+        this.setState({ newItem: { ...this.state.newItem, amount: this.state.newItem.amount + 1}})
     }
 
     toggleInputs() {
@@ -36,14 +42,22 @@ export default class Products extends React.Component{
             <div>
                 <h1>Products</h1>
                 <button onClick={this.toggleInputs} id="enter-new-product-button">Enter New Product</button>
+                
                 <div id="add-product-container">
-                    <div className="inputs-container">
-                        <input onChange={this.addNewItem} value={this.state.addItem.name} className="new-product-inputs" type="text" />
-                        <div className="inputs-amount-container">
-                            <button className="subtraction-button">-</button>
-                            <input onChange={this.addNewItem} value={this.state.addItem.amount} className="amount-input" type="number" />
-                            <button className="addition-button">+</button>
-                        </div>
+                    <div id="inputs-container">
+                        <input 
+                            onChange={(e) => { this.setState({ newItem: { ...this.state.newItem, name: e.target.value }})}} 
+                            value={this.state.newItem.name} 
+                            id="new-product-input" 
+                            type="text" 
+                        />
+                        <button onClick={this.minus} className="plus-minus-buttons" id="minus">-</button>
+                        <input 
+                            onChange={(e) => { this.setState({ newItem: { ...this.state.newItem, amount: e.target.value } })}} 
+                            value={this.state.newItem.amount} 
+                            type="number" 
+                        />
+                        <button onClick={this.plus} className="plus-minus-buttons" id="plus">+</button>
                     </div>
                 </div>
             </div>
