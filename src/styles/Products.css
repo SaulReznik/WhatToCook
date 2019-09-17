@@ -16,7 +16,7 @@ button:hover {
     border-radius: 10px;
     margin: 5px;
     padding: 10px;
-    background-color: rgb(250, 40, 82);
+    background-color: rgb(233, 33, 33);
 }
 
 #enter-new-product-button:hover {
@@ -86,4 +86,13 @@ button:hover {
 #plus {
     background-color: rgb(39, 189, 39);
     border-radius: 0 5px 5px 0;
+}
+
+#submit-button {
+    display: inline-block;
+    margin-left: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(233, 33, 33);
+    font-family: 'Lexend Deca', sans-serif;
 }
