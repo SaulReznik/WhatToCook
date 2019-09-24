@@ -47,20 +47,19 @@ button:hover {
 }
 
 #inputs-container input {
-    width: 40%;
     background: whitesmoke;
     border: none;
     font-family: 'Lexend Deca', sans-serif;
 }
 
-#new-product-input {
+.product-input {
+    width: 40%;
     padding: 5px;
     border-radius: 5px 0 0 5px;
     font-size: 1rem;
 }
 
-/*Following ~10 lines are remove the the arrows from the inputs with number type*/
-#inputs-container input[type='number'] {
+.amount-input {
     -moz-appearance:textfield;
     width: 50px;
     text-align: center;
@@ -94,5 +93,34 @@ button:hover {
     border: none;
     border-radius: 5px;
     background-color: rgb(233, 33, 33);
+    font-family: 'Lexend Deca', sans-serif;
+}
+
+.product-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    width: 100%;
+    margin: 5px 0;
+    background-color: rgb(0, 117, 102);
+    box-sizing: border-box;
+}
+
+.product-item * {
+    box-sizing: border-box;
+    height: 40px;
+}
+
+.product-item input {
+    font-family: 'Lexend Deca', sans-serif;
+    border: none;
+}
+
+.delete-button {
+    margin: 0 20px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
     font-family: 'Lexend Deca', sans-serif;
 }

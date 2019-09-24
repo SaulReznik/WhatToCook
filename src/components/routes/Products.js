@@ -1,4 +1,6 @@
 import React from 'react';
+import update from 'react-addons-update';
+
 import "../../styles/Products.css";
 
 export default class Products extends React.Component{
@@ -10,16 +12,30 @@ export default class Products extends React.Component{
                 amount: 0
             },
             products: [
-                
+                {
+                    name: "Kartol",
+                    amount: 5
+                },
+                {
+                    name: "Kartol",
+                    amount: 5
+                },
+                {
+                    name: "Kartol",
+                    amount: 5
+                }
             ]
         }
 
         this.toggleInputs = this.toggleInputs.bind(this);
         this.handleName = this.handleName.bind(this);
         this.handleAmount = this.handleAmount.bind(this);
+        this.plusNewItem = this.plusNewItem.bind(this);
+        this.minusNewItem = this.minusNewItem.bind(this);
         this.minus = this.minus.bind(this);
         this.plus = this.plus.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.delete = this.delete.bind(this);
     }
 
     toggleInputs() {
@@ -37,26 +53,55 @@ export default class Products extends React.Component{
     }
 
     handleAmount(e) {
-        this.setState({ newItem: { ...this.state.newItem, amount: e.target.value } })
+        const regex = /^[0-9\b]+$/;
+
+        if (regex.test(e.target.value)) {
+            this.setState({ newItem: { ...this.state.newItem, amount: e.target.value } })
+        }
+        
     }
 
-    minus() {
-        this.setState({ newItem: { ...this.state.newItem, amount: this.state.newItem.amount - 1}})
+    minusNewItem() {
+        if (this.state.newItem.amount > 0){
+            this.setState({ newItem: { ...this.state.newItem, amount: this.state.newItem.amount - 1 } })
+        }
     }
 
-    plus() {
+    plusNewItem() {
         this.setState({ newItem: { ...this.state.newItem, amount: this.state.newItem.amount + 1}})
     }
 
-    handleSubmit() {
-        let singleProduct = {
-            name: this.state.newItem.name,
-            amount: this.state.newItem.amount
+    minus(index){
+        if (this.state.products[index].amount > 0) {
+            let products = update(this.state.products, { [index]: { amount: { $set: this.state.products[index].amount - 1 } } });
+            this.setState({
+                products: products
+            })
         }
+    }
+
+    plus(index) {
+        let products = update(this.state.products, { [index]: { amount: { $set: this.state.products[index].amount + 1 } } });
         this.setState({
-            products: [...this.state.products, singleProduct],
-            newItem: { name: "", amount: 0 }
-        });
+            products: products
+        })
+    }
+
+    delete(id) {
+        this.setState({products: this.state.products.filter((item, index) => index !== id)});
+    }
+
+    handleSubmit() {
+        if (this.state.newItem.name.length > 0 && this.state.newItem.amount > 0){
+            let singleProduct = {
+                name: this.state.newItem.name,
+                amount: this.state.newItem.amount
+            }
+            this.setState({
+                products: [...this.state.products, singleProduct],
+                newItem: { name: "", amount: 0 }
+            });
+        }
     }
 
     render(){
@@ -71,16 +116,18 @@ export default class Products extends React.Component{
                         <input 
                             onChange={this.handleName} 
                             value={this.state.newItem.name} 
-                            id="new-product-input" 
+                            className="product-input" 
                             type="text" 
                         />
-                        <button onClick={this.minus} className="plus-minus-buttons" id="minus">-</button>
+                        <button onClick={this.minusNewItem} className="plus-minus-buttons" id="minus">-</button>
                         <input 
                             onChange={this.handleAmount} 
-                            value={this.state.newItem.amount} 
-                            type="number" 
+                            value={this.state.newItem.amount}
+                            className="amount-input"
+                            type="text"
+                            readOnly
                         />
-                        <button onClick={this.plus} className="plus-minus-buttons" id="plus">+</button>
+                        <button onClick={this.plusNewItem} className="plus-minus-buttons" id="plus">+</button>
 
                         <button onClick={this.handleSubmit} id="submit-button">Add New Product</button>
                     </div>
@@ -89,13 +136,12 @@ export default class Products extends React.Component{
                 {
                     this.state.products.map((item, index) => {
                         return(
-                            <div key={index} className="inputs-container">
-                                <input readOnly value={this.state.products[index].name} className="new-product-inputs" type="text" />
-                                <div className="inputs-amount-container">
-                                    <button className="subtraction-button">-</button>
-                                    <input readOnly value={this.state.products[index].amount} className="amount-input" type="number" />
-                                    <button className="addition-button">+</button>
-                                </div>
+                            <div className="product-item" key={index}>
+                                <input className="product-input" readOnly value={this.state.products[index].name} type="text" />
+                                <button className="plus-minus-buttons" id="minus" onClick={() => this.minus(index)}>-</button>
+                                <input className="amount-input" readOnly value={this.state.products[index].amount} type="text" />
+                                <button className="plus-minus-buttons" id="plus" onClick={() => this.plus(index)}>+</button>
+                                <button className="delete-button" onClick={() => this.delete(index)}>Delete</button>
                             </div>
                         )
                     })
