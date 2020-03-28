@@ -45,7 +45,10 @@ export default class Products extends React.Component{
             minusNewItem, 
             plus, 
             minus, 
-            deleteItem
+            deleteItem,
+            onAmountChange,
+            keyDown,
+            blur
         } = this.props;
 
         return(
@@ -64,11 +67,10 @@ export default class Products extends React.Component{
                         />
                         <button onClick={minusNewItem} className="plus-minus-buttons" id="minus">-</button>
                         <input 
-                            onChange={handleAmount} 
+                            onChange={(e) => handleAmount(e)} 
                             value={state.newItem.amount}
                             className="amount-input"
-                            type="text"
-                            readOnly
+                            type="number"
                         />
                         <button onClick={plusNewItem} className="plus-minus-buttons" id="plus">+</button>
 
@@ -82,7 +84,14 @@ export default class Products extends React.Component{
                             <div className="product-item" key={index}>
                                 <input className="product-input" readOnly value={state.products[index].name} type="text" />
                                 <button className="plus-minus-buttons" id="minus" onClick={() => minus(index)}>-</button>
-                                <input className="amount-input" readOnly value={state.products[index].amount} type="text" />
+                                <input 
+                                    className="amount-input" 
+                                    onChange={(e) => onAmountChange(e, index)} 
+                                    onKeyDown={(e) => keyDown(e)} 
+                                    onBlur={(e) => blur(e, index)} 
+                                    value={state.products[index].amount} 
+                                    type="number" 
+                                />
                                 <button className="plus-minus-buttons" id="plus" onClick={() => plus(index)}>+</button>
                                 <button className="delete-button" onClick={() => deleteItem(index)}>Delete</button>
                             </div>

@@ -16,7 +16,10 @@ export default class Body extends React.Component{
             minusNewItem,
             plus,
             minus,
-            deleteItem
+            deleteItem,
+            onAmountChange,
+            keyDown,
+            blur
         } = this.props;
 
         return(
@@ -34,6 +37,9 @@ export default class Body extends React.Component{
                     plus={plus}
                     minus={minus}
                     deleteItem={deleteItem}
+                    onAmountChange={onAmountChange}
+                    keyDown={keyDown}
+                    blur={blur}
                 />)} />
                 <Route path="/recepies" component={Recepies} />
             </div>

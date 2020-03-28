@@ -10,20 +10,40 @@ export default class App extends React.Component{
             name: "",
             amount: 0
         },
+        recepies: [
+            {
+                name: 'Mashed potatoes',
+                products: [
+                    {
+                        name: 'Potato',
+                        amount: 5,
+                    },
+                    {
+                        name: 'butter',
+                        amount: 200,
+                    },
+                    {
+                        name: 'salt',
+                        amount: 15
+                    }
+                ]
+            }
+        ],
         products: [
             {
-                name: "Kartol",
+                name: "Potato",
                 amount: 5
             },
             {
-                name: "Grechka",
+                name: "tomato",
                 amount: 5
             },
             {
-                name: "ZT",
+                name: "Sour Milk",
                 amount: 5
             }
-        ]
+        ],
+        keyCode: null,
     };
 
     handleName = (e) => {
@@ -31,11 +51,27 @@ export default class App extends React.Component{
     }
 
     handleAmount = (e) => {
-        const regex = /^[0-9\b]+$/;
 
-        if (regex.test(e.target.value)) {
-            this.setState({ newItem: { ...this.state.newItem, amount: e.target.value } })
-        }
+        const { keyCode } = this.state;
+
+        const restrictedChars = [43, 45, 69, 107, 109, 187, 188, 189, 190];
+
+        if (restrictedChars.includes(keyCode)) return;
+
+        const val = e.target.value.slice(0, 4);
+
+        this.setState(prevstate => ({
+            newItem: {          
+                ...prevstate.newItem,
+                amount: val,
+            }
+        }))
+
+        // const regex = /^[0-9\b]+$/;
+
+        // if (regex.test(e.target.value)) {
+        //     this.setState({ newItem: { ...this.state.newItem, amount: e.target.value } })
+        // }
 
     }
 
@@ -86,7 +122,55 @@ export default class App extends React.Component{
         })
     }
 
-    deleteItem = (id) => {
+    onAmountChange = (e, index) => {
+    const { products, keyCode } = this.state;
+
+    const restrictedChars = [43, 45, 69, 107, 109, 187, 188, 189, 190];
+
+    if(restrictedChars.includes(keyCode)) return;
+    
+    const val = e.target.value.slice(0, 4);
+    
+    const before = products.filter((item, indx) => indx < index);
+    const after = products.filter((item, indx) => indx > index);
+
+    this.setState(prevstate => ({
+        products: [
+            ...before,
+            {
+                ...prevstate.products[index],
+                amount: val,
+            },
+            ...after
+        ]
+    }))
+    }
+
+    keyDown = e => {
+        this.setState({keyCode: e.keyCode})
+    }
+
+    blur = (e, index) => {
+        const { products } = this.state;
+
+        if(!e.target.value){
+            const before = products.filter((item, indx) => indx < index);
+            const after = products.filter((item, indx) => indx > index);
+
+            this.setState(prevstate => ({
+                products: [
+                    ...before,
+                    {
+                        ...prevstate.products[index],
+                        amount: 0,
+                    },
+                    ...after
+                ]
+            }))
+        }
+    }
+
+    deleteItem = id => {
         this.setState({ products: this.state.products.filter((item, index) => index !== id) });
     }
 
@@ -116,7 +200,10 @@ export default class App extends React.Component{
                     minusNewItem={this.minusNewItem}
                     plus={this.plus}
                     minus={this.minus}
+                    onAmountChange={this.onAmountChange}
+                    keyDown={this.keyDown}
                     deleteItem={this.deleteItem}
+                    blur={this.blur}
                 />
             </div>
         );

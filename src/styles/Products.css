@@ -9,6 +9,12 @@ button:hover {
     cursor: pointer;
 }
 
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
 #enter-new-product-button {
     font-size: 25px;
     font-family: 'Lexend Deca', sans-serif;
@@ -61,7 +67,7 @@ button:hover {
 
 .amount-input {
     -moz-appearance:textfield;
-    width: 50px;
+    width: 70px;
     text-align: center;
     font-size: 1.5rem;
 }
