@@ -8,40 +8,37 @@ import Recepies from './routes/Recepies';
 export default class Body extends React.Component{
     render(){
         const {
-            state,
-            handleName,
-            handleAmount,
+            newItem,
+            products,
+            handleNewItemName,
+            onNewItemAmountChange,
             handleSubmit,
-            plusNewItem,
-            minusNewItem,
-            plus,
-            minus,
             deleteItem,
             onAmountChange,
             keyDown,
-            blur
         } = this.props;
 
         return(
             <div className="body">
                 <h1>Body</h1>
-                <Route path="/products" render={(routeProps) => (
+                <Route path="/products" render={props => (
                 <Products 
-                    {...routeProps}
-                    state={state}
-                    handleName={handleName}
-                    handleAmount={handleAmount}
+                    {...props}
+                    newItem={newItem}
+                    products={products}
+                    handleNewItemName={handleNewItemName}
+                    onNewItemAmountChange={onNewItemAmountChange}
                     handleSubmit={handleSubmit}
-                    plusNewItem={plusNewItem}
-                    minusNewItem={minusNewItem}
-                    plus={plus}
-                    minus={minus}
                     deleteItem={deleteItem}
                     onAmountChange={onAmountChange}
                     keyDown={keyDown}
-                    blur={blur}
                 />)} />
-                <Route path="/recepies" component={Recepies} />
+                <Route path="/recepies" render={props => {
+                    <Recepies 
+                        {...props}
+
+                    />
+                }} />
             </div>
         )
     }
