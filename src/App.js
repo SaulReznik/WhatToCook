@@ -1,4 +1,6 @@
 import React from "react";
+import { BrowserRouter } from 'react-router-dom';
+
 import "./App.css";
 
 import Sidebar from "./components/Sidebar";
@@ -6,6 +8,7 @@ import Body from "./components/Body";
 
 //keycodes of restricted characters for all our amount inputs
 const restrictedChars = [43, 45, 69, 107, 109, 187, 188, 189, 190];
+
 export default class App extends React.Component{
     state = {
         newItem: {
@@ -28,10 +31,10 @@ export default class App extends React.Component{
         ],
         keyCode: null,                     //Here we defining the last pressed keycode of active input
 
-        recepies: [
+        recipes: [
             {
                 name: 'Mashed potatoes',
-                products: [
+                ingredients: [
                     {
                         name: 'Potato',
                         amount: '5',
@@ -44,7 +47,8 @@ export default class App extends React.Component{
                         name: 'salt',
                         amount: '15'
                     }
-                ]
+                ],
+                instructions: 'Some Text',
             }
         ]
     };
@@ -108,24 +112,27 @@ export default class App extends React.Component{
     }
 
     render(){
-        const { newItem, products } = this.state;
+        const { newItem, products, recipes } = this.state;
         return(
             <div className="App">
-                <Sidebar />
-                <Body 
-                    newItem={newItem}
-                    products={products}
-                    handleNewItemName={this.handleNewItemName}
-                    onNewItemAmountChange={this.onNewItemAmountChange}
-                    handleSubmit={this.handleSubmit}
-                    plusNewItem={this.plusNewItem}
-                    minusNewItem={this.minusNewItem}
-                    plus={this.plus}
-                    minus={this.minus}
-                    onAmountChange={this.onAmountChange}
-                    keyDown={this.keyDown}
-                    deleteItem={this.deleteItem}
-                />
+                <BrowserRouter>
+                    <Sidebar />
+                    <Body 
+                        newItem={newItem}
+                        products={products}
+                        recipes={recipes}
+                        handleNewItemName={this.handleNewItemName}
+                        onNewItemAmountChange={this.onNewItemAmountChange}
+                        handleSubmit={this.handleSubmit}
+                        plusNewItem={this.plusNewItem}
+                        minusNewItem={this.minusNewItem}
+                        plus={this.plus}
+                        minus={this.minus}
+                        onAmountChange={this.onAmountChange}
+                        keyDown={this.keyDown}
+                        deleteItem={this.deleteItem}
+                    />
+                </BrowserRouter>
             </div>
         );
     }

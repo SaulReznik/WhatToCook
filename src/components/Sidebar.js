@@ -1,9 +1,6 @@
 import React from 'react';
 import "../styles/Sidebar.css";
-import { Link} from 'react-router-dom';
-
-import Products from './routes/Products';
-import Recepies from './routes/Recepies';
+import { Link } from 'react-router-dom';
 
 export default class Sidebar extends React.Component{
     render(){
@@ -12,10 +9,10 @@ export default class Sidebar extends React.Component{
                 <h1>Sidebar</h1>
                 <div id="links">
                     <div className="link-container">
-                        <Link to={'/products'}>Products</Link>
+                        <Link to='/products'>Products</Link>
                     </div>
                     <div className="link-container">
-                        <Link to={'/recepies'}>Recepies</Link>
+                        <Link to='/recipes'>Recipes</Link>
                     </div>
                 </div>
             </div>
