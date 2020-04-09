@@ -15,3 +15,9 @@ input:focus {
     display: flex;
     flex-direction: row;
 }
+
+.body {
+    background-color: rgb(248, 98, 43);
+    height: 100%;
+    width: 75%;
+}

@@ -1,18 +1,15 @@
 import React from 'react';
-import update from 'react-addons-update';
 
 import "../../styles/Products.css";
 
 export default class Products extends React.Component{
+    state = {
+        isAddProductOpen: false
+    }
 
     toggleInputs = () => {
-        let inputs_div = document.getElementById("add-product-container");
-
-        if (inputs_div.style.display === "block") {
-            inputs_div.style.display = "none"
-        } else {
-            inputs_div.style.display = "block";
-        }
+        const { isAddProductOpen } = this.state;
+        this.setState({isAddProductOpen: !isAddProductOpen});
     }
 
     render(){
@@ -33,23 +30,28 @@ export default class Products extends React.Component{
                 <h1>Products</h1>
                 <button onClick={this.toggleInputs} id="enter-new-product-button">Enter New Product</button>
                 
-                <div id="add-product-container">
-                    <div id="inputs-container" onSubmit={handleSubmit}>
-                        <input 
-                            onChange={handleNewItemName} 
-                            value={newItem.name} 
-                            className="product-input" 
-                            type="text" 
-                        />
-                        <input 
-                            onChange={(e) => onNewItemAmountChange(e)} 
-                            value={newItem.amount}
-                            className="amount-input"
-                            type="number"
-                        />
-                        <button onClick={handleSubmit} id="submit-button">Add New Product</button>
-                    </div>
-                </div>
+                {
+                    this.state.isAddProductOpen ? 
+                    <div id="add-product-container">
+                        <div id="inputs-container" onSubmit={handleSubmit}>
+                            <input
+                                onChange={handleNewItemName}
+                                value={newItem.name}
+                                className="product-input"
+                                type="text"
+                            />
+                            <input
+                                onChange={(e) => onNewItemAmountChange(e)}
+                                value={newItem.amount}
+                                className="amount-input"
+                                type="number"
+                            />
+                            <button onClick={handleSubmit} id="submit-button">Add New Product</button>
+                        </div>
+                    </div> 
+                    : null
+                }
+                
 
                 {
                     products.map((item, index) => {

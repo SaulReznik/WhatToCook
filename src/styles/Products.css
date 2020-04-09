@@ -34,10 +34,6 @@ input[type=number]::-webkit-outer-spin-button {
     border: none;
 }
 
-#add-product-container {
-    display: none;
-}
-
 #inputs-container {
     width: 100%;
     height: 80px;

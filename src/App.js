@@ -1,10 +1,11 @@
 import React from "react";
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 import "./App.css";
 
 import Sidebar from "./components/Sidebar";
-import Body from "./components/Body";
+import Products from './components/routes/Products';
+import Recipes from './components/routes/Recipes';
 
 //keycodes of restricted characters for all our amount inputs
 const restrictedChars = [43, 45, 69, 107, 109, 187, 188, 189, 190];
@@ -92,6 +93,16 @@ export default class App extends React.Component{
         }))
     }
 
+    addNewRecipe = recipe => {
+        this.setState(prevstate => ({
+            ...prevstate,
+            recipes: [
+                ...prevstate.recipes,
+                recipe,
+            ]
+        }))
+    }
+
     keyDown = e => this.setState({keyCode: e.keyCode})
 
     deleteItem = id => this.setState({ products: this.state.products.filter((item, index) => index !== id) })
@@ -117,21 +128,30 @@ export default class App extends React.Component{
             <div className="App">
                 <BrowserRouter>
                     <Sidebar />
-                    <Body 
-                        newItem={newItem}
-                        products={products}
-                        recipes={recipes}
-                        handleNewItemName={this.handleNewItemName}
-                        onNewItemAmountChange={this.onNewItemAmountChange}
-                        handleSubmit={this.handleSubmit}
-                        plusNewItem={this.plusNewItem}
-                        minusNewItem={this.minusNewItem}
-                        plus={this.plus}
-                        minus={this.minus}
-                        onAmountChange={this.onAmountChange}
-                        keyDown={this.keyDown}
-                        deleteItem={this.deleteItem}
-                    />
+                    <div className="body">
+                        <h1>Body</h1>
+                        <Route exact path="/products" render={props => (
+                            <Products
+                                {...props}
+                                newItem={newItem}
+                                products={products}
+                                handleNewItemName={this.handleNewItemName}
+                                onNewItemAmountChange={this.onNewItemAmountChange}
+                                handleSubmit={this.handleSubmit}
+                                deleteItem={this.deleteItem}
+                                onAmountChange={this.onAmountChange}
+                                keyDown={this.keyDown}
+                            />)}
+                        />
+                        <Route exact path="/recipes" render={props => (
+                            <Recipes
+                                {...props}
+                                recipes={recipes}
+                                addNewRecipe={this.addNewRecipe}
+                            />)}
+                        />
+
+                    </div>
                 </BrowserRouter>
             </div>
         );

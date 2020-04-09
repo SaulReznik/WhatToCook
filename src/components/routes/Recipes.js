@@ -1,35 +1,144 @@
 import React from 'react';
 
-import Recipe from '../Recipe';
+import '../../styles/Recipes.css';
 
+import Recipe from '../Recipe';
 class Recipes extends React.Component{
     state = {
+        isAddRecipeOpen: false,
         isOpen: false,
+        newRecipe: {
+            name: '',
+            ingredients: [],
+            instructions: ''
+        },
+        newRecipeItem: {
+            name: '',
+            amount: ''
+        }
     }
 
-    togglePanel = (e) => {
+    toggleAddNewRecipe = () => {
+        this.setState({isAddRecipeOpen: !this.state.isAddRecipeOpen})
+    }
+
+    togglePanel = () => {
         this.setState({isOpen: !this.state.isOpen})
     }
 
+    onNewRecipeNameChange = e => {
+        const value = e.target.value;
+
+        this.setState(prevstate => ({newRecipe: {
+            ...prevstate.newRecipe,
+            name: value,
+        }}))
+    }
+
+    onNewRecipeItemNameChange = e => {
+        const value = e.target.value;
+
+        this.setState(prevstate => ({
+            ...prevstate,
+            newRecipeItem: {
+                ...prevstate.newRecipeItem,
+                name: value,
+            }
+        }))
+    }
+
+    onNewRecipeItemAmountChange = e => {
+        const value = e.target.value;
+
+        this.setState(prevstate => ({
+            ...prevstate,
+            newRecipeItem: {
+                ...prevstate.newRecipeItem,
+                amount: value,
+            }
+        }))
+    }
+
+    onNewRecipeInstructionsChange = e => {
+        const value = e.target.value;
+
+        this.setState(prevstate => ({
+            ...prevstate.newRecipe,
+            instructions: value
+        }))
+    }
+
+    newRecipeAdditionHandler = () => {
+        const { newRecipe, newRecipeItem } = this.state;
+
+        this.setState(prevstate => ({
+            ...prevstate,
+            newRecipe: {
+                ...newRecipe,
+                ingredients: [
+                    ...newRecipe.ingredients,
+                    newRecipeItem,
+                ]
+            },
+            newRecipeItem: {
+                name: '',
+                amount: ''
+            },
+        }))
+    }
+
     render(){
-        const { recipes } = this.props;
+        const { isOpen, newRecipe, newRecipeItem } = this.state;
+        const { recipes, addNewRecipe } = this.props;
+
         return (
             <div className="recipes">
                 <h1>Recipes</h1>
+                <button onClick={this.toggleAddNewRecipe} id='add-recipe-btn'>Add Recipe</button>
+
+                {
+                    this.state.isAddRecipeOpen ? 
+                        <div id='add-recipe'>
+                            <div>
+                                <span>Name:</span>
+                                <input 
+                                    value={newRecipe.name} 
+                                    onChange={e => this.onNewRecipeNameChange(e)}
+                                />
+                            </div>
+                            <div>
+                                <span>Ingredients:</span>
+                                <input value={newRecipeItem.name} onChange={this.onNewRecipeItemNameChange}/>
+                                <input value={newRecipeItem.amount} onChange={this.onNewRecipeItemAmountChange}/>
+                                <button onClick={this.newRecipeAdditionHandler}>Add</button>
+                            </div>
+                            <ol>
+                                {newRecipe.ingredients.map((item, index) => (
+                                    <li key={index}>{item.name} - {item.amount}</li>
+                                ))}
+                            </ol>
+                            <div>
+                                <span>Instructions:</span>
+                                <textarea onChange={e => this.onNewRecipeInstructionsChange(e)} />
+                            </div>
+                            <button onClick={() => addNewRecipe(newRecipe)}>Add New Recipe</button>
+                        </div>
+                        : null
+                }
+
 
                 <ol>
                     {
-                        recipes.map((item, index) => {
-                            <li key={index} onClick={(e) => this.togglePanel(e)}>
-                                <h1>{item.name}</h1>
-                                {this.state.isOpen ? 
-                                <Recipe 
-                                    ingredients={item.ingredients}
-                                    instructions={item.instructions}
-                                /> 
-                                : null}
-                            </li>
-                        })
+                        recipes.map((item, index) => (
+                            <Recipe 
+                                key={index}
+                                togglePanel={this.togglePanel}
+                                name={item.name}
+                                isOpen={isOpen}
+                                ingredients={item.ingredients}
+                                instructions={item.instructions}
+                            />    
+                        ))
                     }
                 </ol>
             </div>

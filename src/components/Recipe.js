@@ -1,18 +1,25 @@
 import React from 'react';
 
 const Recipe = props => {
-    const { ingredients, instructions } = props;
+    const { ingredients, instructions, togglePanel, name, isOpen } = props;
     return (
-        <div>
-            <ol>
-                {ingredients.map((item, index) => (
-                    <li key={index}>{item.name} - {item.amount}</li>
-                ))}
-            </ol>
-            <p>
-                {instructions}
-            </p>
-        </div>
+        <li onClick={togglePanel}>
+            <h3>{name}</h3>
+            {
+                isOpen ?
+                <>
+                    <ol>
+                        {ingredients.map((item, index) => (
+                            <li key={index}>{item.name} - {item.amount}</li>
+                        ))}
+                    </ol>
+                    <p>
+                        {instructions}
+                    </p>
+                </>
+                : null
+            }
+        </li>
     )
 }
 
