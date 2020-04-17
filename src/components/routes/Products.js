@@ -42,6 +42,7 @@ export default class Products extends React.Component{
                             />
                             <input
                                 onChange={(e) => onNewItemAmountChange(e)}
+                                onKeyDown={(e) => keyDown(e)}
                                 value={newItem.amount}
                                 className="amount-input"
                                 type="number"

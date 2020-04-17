@@ -14,9 +14,12 @@ class Recipes extends React.Component{
         },
         newRecipeItem: {
             name: '',
-            amount: ''
-        }
+            amount: '0'
+        },
+        keyCode: null,
     }
+
+    keyDown = e => this.setState({ keyCode: e.keyCode });
 
     toggleAddNewRecipe = () => {
         this.setState({isAddRecipeOpen: !this.state.isAddRecipeOpen})
@@ -48,13 +51,17 @@ class Recipes extends React.Component{
     }
 
     onNewRecipeItemAmountChange = e => {
-        const value = e.target.value;
+        const { keyCode } = this.state;
+        const { restrictedChars } = this.props;
+
+        if (restrictedChars.includes(keyCode)) return;
+
+        const val = `${parseFloat(+e.target.value)}`.slice(0, 4);
 
         this.setState(prevstate => ({
-            ...prevstate,
             newRecipeItem: {
                 ...prevstate.newRecipeItem,
-                amount: value,
+                amount: val,
             }
         }))
     }
@@ -109,7 +116,12 @@ class Recipes extends React.Component{
                             <div>
                                 <span>Ingredients:</span>
                                 <input value={newRecipeItem.name} onChange={this.onNewRecipeItemNameChange}/>
-                                <input value={newRecipeItem.amount} onChange={this.onNewRecipeItemAmountChange}/>
+                                <input 
+                                    onChange={(e) => this.onNewRecipeItemAmountChange(e)}
+                                    onKeyDown={(e) => this.keyDown(e)}
+                                    value={newRecipeItem.amount} 
+                                    type="number"
+                                />
                                 <button onClick={this.newRecipeAdditionHandler}>Add</button>
                             </div>
                             <ol>
@@ -125,8 +137,7 @@ class Recipes extends React.Component{
                         </div>
                         : null
                 }
-
-
+                
                 <ol>
                     {
                         recipes.map((item, index) => (

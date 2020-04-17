@@ -4,6 +4,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import "./App.css";
 
 import Sidebar from "./components/Sidebar";
+//Routes
+import WhatToCook from './components/routes/WhatToCook';
 import Products from './components/routes/Products';
 import Recipes from './components/routes/Recipes';
 
@@ -65,7 +67,7 @@ export default class App extends React.Component{
         const val = `${parseFloat(+e.target.value)}`.slice(0, 4);
 
         this.setState(prevstate => ({
-            newItem: {          
+            newItem: {
                 ...prevstate.newItem,
                 amount: val,
             }
@@ -130,6 +132,13 @@ export default class App extends React.Component{
                     <Sidebar />
                     <div className="body">
                         <h1>Body</h1>
+                        <Route exact path="/" render={props => (
+                            <WhatToCook 
+                                {...props}
+                                recipes={recipes}
+                                products={products}
+                            />)}
+                        />
                         <Route exact path="/products" render={props => (
                             <Products
                                 {...props}
@@ -148,9 +157,9 @@ export default class App extends React.Component{
                                 {...props}
                                 recipes={recipes}
                                 addNewRecipe={this.addNewRecipe}
+                                restrictedChars={restrictedChars}
                             />)}
                         />
-
                     </div>
                 </BrowserRouter>
             </div>
