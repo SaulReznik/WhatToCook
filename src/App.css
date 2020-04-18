@@ -20,4 +20,7 @@ input:focus {
     background-color: rgb(248, 98, 43);
     height: 100%;
     width: 75%;
+    overflow-y: auto;
+    overflow-x: auto;
+    box-sizing: border-box;
 }

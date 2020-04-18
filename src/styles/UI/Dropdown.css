@@ -1,0 +1,16 @@
+.dropdownBtn {
+    height: 25px;
+    width: 200px;
+    text-align: left;
+}
+
+.dropdownItems {
+    position: absolute;
+}
+
+.dropdownItem {
+    height: inherit;
+    padding-left: 5px; 
+    text-align: left;
+    z-index: 50;
+}

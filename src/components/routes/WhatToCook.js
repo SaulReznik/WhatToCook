@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Dropdown from '../UI/Dropdown';
+
 import '../../styles/WhatToCook.css';
 
 export default class WhatToCook extends React.Component{
@@ -18,13 +20,13 @@ export default class WhatToCook extends React.Component{
         showSortByItems: false,
     };
 
-    toggleFilters = () => {
-        this.setState({showFilters: !this.state.showFilters})
-    }
+    toggleFilters = () => this.setState({showFilters: !this.state.showFilters})
 
-    toggleSortByItems = () => {
-        this.setState({ showSortByItems: !this.state.showSortByItems })
-    }
+    toggleSortByItems = () => this.setState({ showSortByItems: !this.state.showSortByItems })
+
+    filterSelect = filter => this.setState({activeFilter: filter})
+
+    sortByItemSelect = sortByItem => this.setState({ activeSortByItem: sortByItem })
 
     render(){
         const { 
@@ -43,38 +45,26 @@ export default class WhatToCook extends React.Component{
 
                 <div id='filterSortContainer'>
 
-                    <div className='dropdownContainer'>
+                    <div className='filterSortItem'>
                         <span>Show: </span>
-                        <div>
-                            <button
-                                onClick={this.toggleFilters}
-                                className='dropdownBtn'
-                            >{activeFilter}</button>
-                            {
-                                showFilters ?
-                                filters.map((item, index) => (
-                                    <div key={`${item}${index}`} className='dropdownItem'>{item}</div>
-                                ))
-                                : null
-                            }
-                        </div>
+                        <Dropdown 
+                            toggleDropdown={this.toggleFilters}
+                            activeItem={activeFilter}
+                            showDropdown={showFilters}
+                            dropdownItems={filters}
+                            selectHandler={this.filterSelect}
+                        />
                     </div>
 
-                    <div className='dropdownContainer'>
+                    <div className='filterSortItem'>
                         <span>Sort By: </span>
-                        <div>
-                            <button
-                                onClick={this.toggleSortByItems}
-                                className='dropdownBtn'
-                            >{activeSortByItem}</button>
-                            {   
-                                showSortByItems ?
-                                sortByItems.map((item, index) => (
-                                    <div key={`${item}${index}`} className='dropdownItem'>{item}</div>
-                                ))
-                                : null
-                            }
-                        </div>
+                        <Dropdown 
+                            toggleDropdown={this.toggleSortByItems}
+                            activeItem={activeSortByItem}
+                            showDropdown={showSortByItems}
+                            dropdownItems={sortByItems}
+                            selectHandler={this.sortByItemSelect}
+                        />
                     </div>
 
                 </div>

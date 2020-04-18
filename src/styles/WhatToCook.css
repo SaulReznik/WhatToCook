@@ -2,23 +2,11 @@
     width: 100%;
     border: 1px solid black;
     display: flex;
-    align-items: center;
-    justify-content: space-around; 
+    align-items: flex-start;
+    justify-content: space-around;
 }
 
-.dropdownContainer {
+.filterSortItem {
     display: flex;
     flex-flow: row;
-}
-
-.dropdownBtn {
-    width: 200px;
-    text-align: left;
-}
-
-.dropdownItem {
-    width: 200px;
-    padding-left: 5px; 
-    text-align: left;
-    z-index: 50,
 }

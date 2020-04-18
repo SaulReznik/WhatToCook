@@ -23,6 +23,9 @@ export default class App extends React.Component{
                 name: "Potato",
                 amount: '5'
             },
+            {name: "Butter", amount: "1000",},
+            {name: "Salt", amount: "2000"},
+            {name: "Egg", amount: "10"},
             {
                 name: "tomato",
                 amount: '5'
@@ -43,15 +46,25 @@ export default class App extends React.Component{
                         amount: '5',
                     },
                     {
-                        name: 'butter',
+                        name: 'Butter',
                         amount: '200',
                     },
                     {
-                        name: 'salt',
+                        name: 'Salt',
                         amount: '15'
                     }
                 ],
                 instructions: 'Some Text',
+            },
+            {
+                name: 'Tomato Omlet',
+                ingredients: [
+                    {name: "Tomato",amount: "1",},
+                    {name: "Egg", amount: "1"},
+                    {name: "Salt", amount: "10"},
+                    {name: "Butter", amount: "40"}
+                ],
+                instructions: "Some text",
             }
         ]
     };
