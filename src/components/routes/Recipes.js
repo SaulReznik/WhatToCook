@@ -6,7 +6,6 @@ import Recipe from '../Recipe';
 class Recipes extends React.Component{
     state = {
         isAddRecipeOpen: false,
-        isOpen: false,
         newRecipe: {
             name: '',
             ingredients: [],
@@ -23,10 +22,6 @@ class Recipes extends React.Component{
 
     toggleAddNewRecipe = () => {
         this.setState({isAddRecipeOpen: !this.state.isAddRecipeOpen})
-    }
-
-    togglePanel = () => {
-        this.setState({isOpen: !this.state.isOpen})
     }
 
     onNewRecipeNameChange = e => {
@@ -95,7 +90,7 @@ class Recipes extends React.Component{
     }
 
     render(){
-        const { isOpen, newRecipe, newRecipeItem } = this.state;
+        const { newRecipe, newRecipeItem } = this.state;
         const { recipes, addNewRecipe } = this.props;
 
         return (
@@ -143,12 +138,10 @@ class Recipes extends React.Component{
                         recipes.map((item, index) => (
                             <Recipe 
                                 key={index}
-                                togglePanel={this.togglePanel}
                                 name={item.name}
-                                isOpen={isOpen}
                                 ingredients={item.ingredients}
                                 instructions={item.instructions}
-                            />    
+                            />
                         ))
                     }
                 </ol>

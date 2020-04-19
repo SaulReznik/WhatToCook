@@ -8,21 +8,15 @@ export default class WhatToCook extends React.Component{
     state = {
         filters: [
             'all',
-            'available',
+            'available products',
         ],
         activeFilter: 'all',
-        showFilters: false,
         sortByItems: [
             'alphabet',
             'recent cooked'
         ],
         activeSortByItem: 'alphabet',
-        showSortByItems: false,
     };
-
-    toggleFilters = () => this.setState({showFilters: !this.state.showFilters})
-
-    toggleSortByItems = () => this.setState({ showSortByItems: !this.state.showSortByItems })
 
     filterSelect = filter => this.setState({activeFilter: filter})
 
@@ -32,10 +26,8 @@ export default class WhatToCook extends React.Component{
         const { 
             filters, 
             activeFilter,
-            showFilters,
             sortByItems, 
             activeSortByItem,
-            showSortByItems,
         } = this.state;
         const { recipes, products } = this.props;
 
@@ -48,9 +40,7 @@ export default class WhatToCook extends React.Component{
                     <div className='filterSortItem'>
                         <span>Show: </span>
                         <Dropdown 
-                            toggleDropdown={this.toggleFilters}
                             activeItem={activeFilter}
-                            showDropdown={showFilters}
                             dropdownItems={filters}
                             selectHandler={this.filterSelect}
                         />
@@ -59,9 +49,7 @@ export default class WhatToCook extends React.Component{
                     <div className='filterSortItem'>
                         <span>Sort By: </span>
                         <Dropdown 
-                            toggleDropdown={this.toggleSortByItems}
                             activeItem={activeSortByItem}
-                            showDropdown={showSortByItems}
                             dropdownItems={sortByItems}
                             selectHandler={this.sortByItemSelect}
                         />
