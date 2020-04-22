@@ -2,6 +2,8 @@ import React from 'react';
 
 import Dropdown from '../UI/Dropdown';
 
+import filterRecipes from '../../functions/filterRecipes';
+
 import '../../styles/WhatToCook.css';
 
 export default class WhatToCook extends React.Component{
@@ -12,15 +14,37 @@ export default class WhatToCook extends React.Component{
         ],
         activeFilter: 'all',
         sortByItems: [
-            'alphabet',
+            'names',
             'recent cooked'
         ],
-        activeSortByItem: 'alphabet',
+        activeSortByItem: 'names',
+        processedRecipes: [...this.props.recipes],
     };
 
-    filterSelect = filter => this.setState({activeFilter: filter})
+    filterSelect = filter => {
+        const { products, recipes } = this.props
+        this.setState(prevstate => ({
+            activeFilter: filter,
+            processedRecipes: filterRecipes(filter, products, recipes)
+        }))
+    }
 
-    sortByItemSelect = sortByItem => this.setState({ activeSortByItem: sortByItem })
+    sortByItemSelect = sortByItem => {
+        const { processedRecipes } = this.state;
+
+        if(sortByItem === "names"){
+            processedRecipes.sort((a,b) => {
+                if(a.name > b.name) return -1;
+                if(a.name < b.name) return 1;
+                return 0;
+            });
+        }
+
+        this.setState({ 
+            activeSortByItem: sortByItem,
+            processedRecipes: processedRecipes,
+        })
+    }
 
     render(){
         const { 
@@ -28,8 +52,9 @@ export default class WhatToCook extends React.Component{
             activeFilter,
             sortByItems, 
             activeSortByItem,
+            processedRecipes
         } = this.state;
-        const { recipes, products } = this.props;
+        const { products } = this.props;
 
         return (
             <div>
@@ -59,7 +84,7 @@ export default class WhatToCook extends React.Component{
 
                 <ol>
                     {
-                        recipes.map((item, index) => (
+                        processedRecipes.map((item, index) => (
                             <li key={`${item.name}${index}`}>
                                 <h3>{item.name}</h3>
                             </li>

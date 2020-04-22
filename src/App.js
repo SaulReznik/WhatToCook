@@ -25,9 +25,9 @@ export default class App extends React.Component{
             },
             {name: "Butter", amount: "1000",},
             {name: "Salt", amount: "2000"},
-            {name: "Egg", amount: "10"},
+            //{name: "Egg", amount: "10"},
             {
-                name: "tomato",
+                name: "Tomato",
                 amount: '5'
             },
             {
@@ -47,7 +47,7 @@ export default class App extends React.Component{
                     },
                     {
                         name: 'Butter',
-                        amount: '200',
+                        amount: '30',
                     },
                     {
                         name: 'Salt',
@@ -63,6 +63,16 @@ export default class App extends React.Component{
                     {name: "Egg", amount: "1"},
                     {name: "Salt", amount: "10"},
                     {name: "Butter", amount: "40"}
+                ],
+                instructions: "Some text",
+            },
+            {
+                name: 'a',
+                ingredients: [
+                    { name: "Tomato", amount: "1", },
+                    { name: "Egg", amount: "1" },
+                    { name: "Salt", amount: "10" },
+                    { name: "Butter", amount: "40" }
                 ],
                 instructions: "Some text",
             }
