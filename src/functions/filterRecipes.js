@@ -8,7 +8,6 @@ export default (filter, products, recipes) => {
             currObj[item.name] = item;
             return currObj;
         }, {});
-        console.log(productsObj);
 
         //Here we will filter all our recipes by available products
         const result = recipes.filter((recipe) => {

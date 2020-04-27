@@ -27,8 +27,8 @@ class Recipes extends React.Component{
     onNewRecipeNameChange = e => {
         const value = e.target.value;
 
-        this.setState(prevstate => ({newRecipe: {
-            ...prevstate.newRecipe,
+        this.setState(prevState => ({newRecipe: {
+            ...prevState.newRecipe,
             name: value,
         }}))
     }
@@ -36,10 +36,10 @@ class Recipes extends React.Component{
     onNewRecipeItemNameChange = e => {
         const value = e.target.value;
 
-        this.setState(prevstate => ({
-            ...prevstate,
+        this.setState(prevState => ({
+            ...prevState,
             newRecipeItem: {
-                ...prevstate.newRecipeItem,
+                ...prevState.newRecipeItem,
                 name: value,
             }
         }))
@@ -53,9 +53,9 @@ class Recipes extends React.Component{
 
         const val = `${parseFloat(+e.target.value)}`.slice(0, 4);
 
-        this.setState(prevstate => ({
+        this.setState(prevState => ({
             newRecipeItem: {
-                ...prevstate.newRecipeItem,
+                ...prevState.newRecipeItem,
                 amount: val,
             }
         }))
@@ -64,8 +64,8 @@ class Recipes extends React.Component{
     onNewRecipeInstructionsChange = e => {
         const value = e.target.value;
 
-        this.setState(prevstate => ({
-            ...prevstate.newRecipe,
+        this.setState(prevState => ({
+            ...prevState.newRecipe,
             instructions: value
         }))
     }
@@ -73,8 +73,8 @@ class Recipes extends React.Component{
     newRecipeAdditionHandler = () => {
         const { newRecipe, newRecipeItem } = this.state;
 
-        this.setState(prevstate => ({
-            ...prevstate,
+        this.setState(prevState => ({
+            ...prevState,
             newRecipe: {
                 ...newRecipe,
                 ingredients: [

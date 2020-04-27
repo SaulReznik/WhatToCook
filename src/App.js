@@ -89,9 +89,9 @@ export default class App extends React.Component{
         //This helps us to avoid 'e', 'first number 0' and max character problems 
         const val = `${parseFloat(+e.target.value)}`.slice(0, 4);
 
-        this.setState(prevstate => ({
+        this.setState(prevState => ({
             newItem: {
-                ...prevstate.newItem,
+                ...prevState.newItem,
                 amount: val,
             }
         }));
@@ -106,11 +106,11 @@ export default class App extends React.Component{
         const before = products.filter((item, indx) => indx < index);
         const after = products.filter((item, indx) => indx > index);
 
-        this.setState(prevstate => ({
+        this.setState(prevState => ({
             products: [
                 ...before,
                 {
-                    ...prevstate.products[index],
+                    ...prevState.products[index],
                     amount: val,
                 },
                 ...after
@@ -119,10 +119,10 @@ export default class App extends React.Component{
     }
 
     addNewRecipe = recipe => {
-        this.setState(prevstate => ({
-            ...prevstate,
+        this.setState(prevState => ({
+            ...prevState,
             recipes: [
-                ...prevstate.recipes,
+                ...prevState.recipes,
                 recipe,
             ]
         }))

@@ -1,8 +1,11 @@
 import React from 'react';
+import _ from 'lodash';
 
 import Dropdown from '../UI/Dropdown';
+import RecipePopup from '../../components/RecipePopup';
 
 import filterRecipes from '../../functions/filterRecipes';
+import sortRecipes from '../../functions/sortRecipes';
 
 import '../../styles/WhatToCook.css';
 
@@ -19,31 +22,57 @@ export default class WhatToCook extends React.Component{
         ],
         activeSortByItem: 'names',
         processedRecipes: [...this.props.recipes],
-    };
+        isPopupOpen: false,
+        popupContent: null,
+    }
+
+    // shouldComponentUpdate(nextProps){
+    //     console.log(this.props.recipes, nextProps.recipes);
+    //     return _.isEqual(this.props.recipes, nextProps.recipes);
+    // }
+
+    // componentDidUpdate(prevProps, prevState) {
+    //     console.log(_.isEqual(this.props.recipes, prevProps.recipes));
+    // }
+
+    componentDidMount() {
+        const { activeFilter, activeSortByItem } = this.state;
+        const { products, recipes } = this.props;
+        const processedRecipes = filterRecipes(activeFilter, products, recipes)
+
+        this.setState(prevState => ({
+            processedRecipes: sortRecipes(activeSortByItem, prevState.processedRecipes)
+        }))
+    }
 
     filterSelect = filter => {
-        const { products, recipes } = this.props
-        this.setState(prevstate => ({
+        const { products, recipes } = this.props;
+        this.setState(prevState => ({
             activeFilter: filter,
             processedRecipes: filterRecipes(filter, products, recipes)
         }))
     }
 
     sortByItemSelect = sortByItem => {
-        const { processedRecipes } = this.state;
-
-        if(sortByItem === "names"){
-            processedRecipes.sort((a,b) => {
-                if(a.name > b.name) return -1;
-                if(a.name < b.name) return 1;
-                return 0;
-            });
-        }
-
-        this.setState({ 
+        this.setState(prevState => ({ 
             activeSortByItem: sortByItem,
-            processedRecipes: processedRecipes,
+            processedRecipes: sortRecipes(sortByItem, prevState.processedRecipes),
+        }))
+    }
+
+    openPopup = item => {
+        this.setState({
+            isPopupOpen: true,
+            popupContent: item,
         })
+    }
+
+    cookTodayBtnHandler = () => this.setState({ isPopupOpen: false })
+
+    closePopup = (e) => {
+        if(e.target.id === 'recipePopupWrapper'){
+            this.setState({ isPopupOpen: false })
+        };   
     }
 
     render(){
@@ -52,7 +81,9 @@ export default class WhatToCook extends React.Component{
             activeFilter,
             sortByItems, 
             activeSortByItem,
-            processedRecipes
+            processedRecipes,
+            isPopupOpen,
+            popupContent
         } = this.state;
         const { products } = this.props;
 
@@ -85,12 +116,20 @@ export default class WhatToCook extends React.Component{
                 <ol>
                     {
                         processedRecipes.map((item, index) => (
-                            <li key={`${item.name}${index}`}>
+                            <li key={`${item.name}${index}`} onClick={() => this.openPopup(item)}>
                                 <h3>{item.name}</h3>
                             </li>
                         ))
                     }
                 </ol>
+                {
+                    isPopupOpen ? 
+                    <RecipePopup 
+                        recipe={popupContent} 
+                        closePopup={this.closePopup}
+                        cookTodayBtnHandler={this.cookTodayBtnHandler}
+                    /> : null
+                }
             </div>
         )
     }
