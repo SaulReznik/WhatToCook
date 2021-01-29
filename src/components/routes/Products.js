@@ -1,10 +1,34 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import "../../styles/Products.css";
-
-export default class Products extends React.Component{
+import { restrictedChars } from '../../constants';
+import actions from '../../store/actions';
+class Products extends React.Component{
     state = {
-        isAddProductOpen: false
+        isAddProductOpen: false,
+        newItem: {
+            name: '',
+            amount: '0'
+        }
+    }
+
+    onNewItemNameChange = e => this.setState({ newItem: { ...this.state.newItem, name: e.target.value } })
+
+    onNewItemAmountChange = e => {
+        const { keyCode } = this.state;
+
+        if (restrictedChars.includes(keyCode)) return;
+
+        //This helps us to avoid 'e', 'first number 0' and max character problems 
+        const val = `${parseFloat(+e.target.value)}`.slice(0, 4);
+
+        this.setState(prevState => ({
+            newItem: {
+                ...prevState.newItem,
+                amount: val,
+            }
+        }));
     }
 
     toggleInputs = () => {
@@ -12,17 +36,23 @@ export default class Products extends React.Component{
         this.setState({isAddProductOpen: !isAddProductOpen});
     }
 
+    handleSubmit = () => {
+        this.props.addProduct(this.state.newItem);
+
+        this.setState({ 
+            newItem: { name: "", amount: 0 }
+        });
+    }
+
     render(){
         const {
-            newItem,
-            products, 
-            handleNewItemName, 
-            onNewItemAmountChange, 
-            handleSubmit,
+            products,
             deleteItem,
             onAmountChange,
             keyDown,
         } = this.props;
+
+        const { isAddProductOpen, newItem } = this.state;
 
         return(
             <div>
@@ -31,23 +61,23 @@ export default class Products extends React.Component{
                 <button onClick={this.toggleInputs} id="enter-new-product-button">Enter New Product</button>
                 
                 {
-                    this.state.isAddProductOpen ? 
+                    isAddProductOpen ? 
                     <div id="add-product-container">
-                        <div id="inputs-container" onSubmit={handleSubmit}>
+                        <div id="inputs-container">
                             <input
-                                onChange={handleNewItemName}
+                                onChange={(e) => this.onNewItemNameChange(e)}
                                 value={newItem.name}
                                 className="product-input"
                                 type="text"
                             />
                             <input
-                                onChange={(e) => onNewItemAmountChange(e)}
+                                onChange={(e) => this.onNewItemAmountChange(e)}
                                 onKeyDown={(e) => keyDown(e)}
                                 value={newItem.amount}
                                 className="amount-input"
                                 type="number"
                             />
-                            <button onClick={handleSubmit} id="submit-button">Add New Product</button>
+                            <button onClick={this.handleSubmit} id="submit-button">Add New Product</button>
                         </div>
                     </div> 
                     : null
@@ -75,4 +105,14 @@ export default class Products extends React.Component{
             </div>
         )
     }
-}
+};
+
+const mapDispatchToProps = dispatch => {
+    const { addNewProduct } = actions;
+
+    return ({
+        addProduct: product => dispatch(addNewProduct(product))
+    })
+};
+
+export default connect(null, mapDispatchToProps)(Products);

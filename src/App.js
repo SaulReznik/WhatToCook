@@ -10,14 +10,10 @@ import Products from './components/routes/Products';
 import Recipes from './components/routes/Recipes';
 
 //keycodes of restricted characters for all our amount inputs
-const restrictedChars = [43, 45, 69, 107, 109, 187, 188, 189, 190];
+// const restrictedChars = [43, 45, 69, 107, 109, 187, 188, 189, 190];
 
 export default class App extends React.Component{
     state = {
-        newItem: {
-            name: "",
-            amount: '0'
-        },
         products: [
             {
                 name: "Potato",
@@ -79,24 +75,6 @@ export default class App extends React.Component{
         ]
     };
 
-    handleNewItemName = e => this.setState({ newItem: { ...this.state.newItem, name: e.target.value } })
-    
-    onNewItemAmountChange = e => {
-        const { keyCode } = this.state;
-
-        if (restrictedChars.includes(keyCode)) return;
-
-        //This helps us to avoid 'e', 'first number 0' and max character problems 
-        const val = `${parseFloat(+e.target.value)}`.slice(0, 4);
-
-        this.setState(prevState => ({
-            newItem: {
-                ...prevState.newItem,
-                amount: val,
-            }
-        }));
-    }
-
     onAmountChange = (e, index) => {
         const { products, keyCode } = this.state;
 
@@ -132,23 +110,23 @@ export default class App extends React.Component{
 
     deleteItem = id => this.setState({ products: this.state.products.filter((item, index) => index !== id) })
 
-    handleSubmit = () => {
-        const { newItem, products } = this.state;
+    // handleSubmit = () => {
+    //     const { newItem, products } = this.state;
 
-        if (newItem.name.length) {
-            let singleProduct = {
-                name: newItem.name,
-                amount: newItem.amount
-            }
-            this.setState({
-                products: [...products, singleProduct],
-                newItem: { name: "", amount: 0 }
-            });
-        }
-    }
+    //     if (newItem.name.length) {
+    //         let singleProduct = {
+    //             name: newItem.name,
+    //             amount: newItem.amount
+    //         }
+    //         this.setState({
+    //             products: [...products, singleProduct],
+    //             newItem: { name: "", amount: 0 }
+    //         });
+    //     }
+    // }
 
     render(){
-        const { newItem, products, recipes } = this.state;
+        const { products, recipes } = this.state;
         return(
             <div className="App">
                 <BrowserRouter>
@@ -165,11 +143,7 @@ export default class App extends React.Component{
                         <Route exact path="/products" render={props => (
                             <Products
                                 {...props}
-                                newItem={newItem}
                                 products={products}
-                                handleNewItemName={this.handleNewItemName}
-                                onNewItemAmountChange={this.onNewItemAmountChange}
-                                handleSubmit={this.handleSubmit}
                                 deleteItem={this.deleteItem}
                                 onAmountChange={this.onAmountChange}
                                 keyDown={this.keyDown}
