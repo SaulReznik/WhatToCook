@@ -131,7 +131,7 @@ const mapDispatchToProps = dispatch => {
         addNewProduct: addNewProductAction,
         changeProductAmount: changeProductAmountAction,
         deleteProduct: deleteProductAction
-    } = actions;
+    } = actions.products;
 
     return ({
         addNewProduct: product => dispatch(addNewProductAction(product)),

@@ -71,16 +71,6 @@ export default class App extends React.Component{
         ]
     };
 
-    addNewRecipe = recipe => {
-        this.setState(prevState => ({
-            ...prevState,
-            recipes: [
-                ...prevState.recipes,
-                recipe,
-            ]
-        }))
-    }
-
     render(){
         const { products, recipes } = this.state;
         
@@ -98,13 +88,7 @@ export default class App extends React.Component{
                             />)}
                         />
                         <Route exact path="/products" component={Products} />
-                        <Route exact path="/recipes" render={props => (
-                            <Recipes
-                                {...props}
-                                recipes={recipes}
-                                addNewRecipe={this.addNewRecipe}
-                            />)}
-                        />
+                        <Route exact path="/recipes" component={Recipes} />
                     </div>
                 </BrowserRouter>
             </div>

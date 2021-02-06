@@ -1,15 +1,20 @@
-export const addNewProduct = product => ({
+const addNewProduct = product => ({
     type: 'ADD_NEW_PRODUCT',
     product
 });
 
-export const changeProductAmount = payload => ({
+const changeProductAmount = payload => ({
     type: 'CHANGE_PRODUCT_AMOUNT',
     payload
 });
 
-export const deleteProduct = index => ({
+const deleteProduct = index => ({
     type: 'DELETE_PRODUCT',
     index
 })
 
+export default {
+    addNewProduct,
+    changeProductAmount,
+    deleteProduct
+}
