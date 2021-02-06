@@ -18,7 +18,9 @@ export const products = ( state = [], action ) => {
                     amount: val
                 },
                 ...after
-            ]
+            ];
+        case 'DELETE_PRODUCT':
+            return state.filter((product, i) => i !== action.index);
         default: 
             return state;
     }

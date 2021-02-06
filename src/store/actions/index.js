@@ -1,5 +1,7 @@
-import { addNewProduct } from './products';
+import { addNewProduct, changeProductAmount, deleteProduct } from './products';
 
 export default {
-    addNewProduct
+    addNewProduct,
+    changeProductAmount,
+    deleteProduct
 }

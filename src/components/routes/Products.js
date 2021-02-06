@@ -38,7 +38,8 @@ class Products extends React.Component{
     }
 
     handleSubmit = () => {
-        this.props.addNewProduct(this.state.newItem);
+        const { addNewProduct } = this.props; 
+        addNewProduct(this.state.newItem);
 
         this.setState({ 
             newItem: { name: "", amount: 0 }
@@ -59,11 +60,12 @@ class Products extends React.Component{
     }
 
     render(){
-        const {
+        const { 
             products,
-            deleteItem,
-            keyDown,
+            deleteProduct
         } = this.props;
+
+        console.log(this.props);
 
         const { isAddProductOpen, newItem } = this.state;
 
@@ -85,7 +87,7 @@ class Products extends React.Component{
                             />
                             <input
                                 onChange={(e) => this.onNewItemAmountChange(e)}
-                                onKeyDown={(e) => keyDown(e)}
+                                onKeyDown={(e) => this.keyDown(e)}
                                 value={newItem.amount}
                                 className="amount-input"
                                 type="number"
@@ -105,11 +107,11 @@ class Products extends React.Component{
                                 <input 
                                     className="amount-input" 
                                     onChange={(e) => this.onAmountChange(e, index)} 
-                                    onKeyDown={(e) => keyDown(e)}
+                                    onKeyDown={(e) => this.keyDown(e)}
                                     value={products[index].amount} 
                                     type="number" 
                                 />
-                                <button className="delete-button" onClick={() => deleteItem(index)}>Delete</button>
+                                <button className="delete-button" onClick={() => deleteProduct(index)}>Delete</button>
                             </div>
                         )
                     })
@@ -127,12 +129,14 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
     const { 
         addNewProduct: addNewProductAction,
-        changeProductAmount: changeProductAmountAction
+        changeProductAmount: changeProductAmountAction,
+        deleteProduct: deleteProductAction
     } = actions;
 
     return ({
         addNewProduct: product => dispatch(addNewProductAction(product)),
-        changeProductAmount: payload => dispatch(changeProductAmountAction(payload))
+        changeProductAmount: payload => dispatch(changeProductAmountAction(payload)),
+        deleteProduct: index => dispatch(deleteProductAction(index))
     })
 };
 

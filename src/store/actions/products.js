@@ -8,3 +8,8 @@ export const changeProductAmount = payload => ({
     payload
 });
 
+export const deleteProduct = index => ({
+    type: 'DELETE_PRODUCT',
+    index
+})
+
