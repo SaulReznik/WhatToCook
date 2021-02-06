@@ -3,3 +3,8 @@ export const addNewProduct = product => ({
     product
 });
 
+export const changeProductAmount = payload => ({
+    type: 'CHANGE_PRODUCT_AMOUNT',
+    payload
+});
+

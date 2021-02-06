@@ -75,26 +75,26 @@ export default class App extends React.Component{
         ]
     };
 
-    onAmountChange = (e, index) => {
-        const { products, keyCode } = this.state;
+    // onAmountChange = (e, index) => {
+    //     const { products, keyCode } = this.state;
 
-        if(restrictedChars.includes(keyCode)) return;
+    //     if(restrictedChars.includes(keyCode)) return;
         
-        const val = `${parseFloat(+e.target.value)}`.slice(0, 4);
-        const before = products.filter((item, indx) => indx < index);
-        const after = products.filter((item, indx) => indx > index);
+    //     const val = `${parseFloat(+e.target.value)}`.slice(0, 4);
+    //     const before = products.filter((item, indx) => indx < index);
+    //     const after = products.filter((item, indx) => indx > index);
 
-        this.setState(prevState => ({
-            products: [
-                ...before,
-                {
-                    ...prevState.products[index],
-                    amount: val,
-                },
-                ...after
-            ]
-        }))
-    }
+    //     this.setState(prevState => ({
+    //         products: [
+    //             ...before,
+    //             {
+    //                 ...prevState.products[index],
+    //                 amount: val,
+    //             },
+    //             ...after
+    //         ]
+    //     }))
+    // }
 
     addNewRecipe = recipe => {
         this.setState(prevState => ({
@@ -109,21 +109,6 @@ export default class App extends React.Component{
     keyDown = e => this.setState({keyCode: e.keyCode})
 
     deleteItem = id => this.setState({ products: this.state.products.filter((item, index) => index !== id) })
-
-    // handleSubmit = () => {
-    //     const { newItem, products } = this.state;
-
-    //     if (newItem.name.length) {
-    //         let singleProduct = {
-    //             name: newItem.name,
-    //             amount: newItem.amount
-    //         }
-    //         this.setState({
-    //             products: [...products, singleProduct],
-    //             newItem: { name: "", amount: 0 }
-    //         });
-    //     }
-    // }
 
     render(){
         const { products, recipes } = this.state;

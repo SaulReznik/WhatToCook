@@ -6,6 +6,7 @@ import { restrictedChars } from '../../constants';
 import actions from '../../store/actions';
 class Products extends React.Component{
     state = {
+        keyCode: null,
         isAddProductOpen: false,
         newItem: {
             name: '',
@@ -37,18 +38,30 @@ class Products extends React.Component{
     }
 
     handleSubmit = () => {
-        this.props.addProduct(this.state.newItem);
+        this.props.addNewProduct(this.state.newItem);
 
         this.setState({ 
             newItem: { name: "", amount: 0 }
         });
     }
 
+    keyDown = e => this.setState({keyCode: e.keyCode})
+
+    onAmountChange = (e, index) => {
+        const { keyCode } = this.state;
+        const { changeProductAmount } = this.props;
+
+        if(restrictedChars.includes(keyCode)) return;
+        
+        const payload = { e, index };
+
+        changeProductAmount(payload);
+    }
+
     render(){
         const {
             products,
             deleteItem,
-            onAmountChange,
             keyDown,
         } = this.props;
 
@@ -91,7 +104,7 @@ class Products extends React.Component{
                                 <input className="product-input" readOnly value={products[index].name} type="text" />
                                 <input 
                                     className="amount-input" 
-                                    onChange={(e) => onAmountChange(e, index)} 
+                                    onChange={(e) => this.onAmountChange(e, index)} 
                                     onKeyDown={(e) => keyDown(e)}
                                     value={products[index].amount} 
                                     type="number" 
@@ -107,12 +120,20 @@ class Products extends React.Component{
     }
 };
 
+const mapStateToProps = state => ({
+    products: state.products
+});
+
 const mapDispatchToProps = dispatch => {
-    const { addNewProduct } = actions;
+    const { 
+        addNewProduct: addNewProductAction,
+        changeProductAmount: changeProductAmountAction
+    } = actions;
 
     return ({
-        addProduct: product => dispatch(addNewProduct(product))
+        addNewProduct: product => dispatch(addNewProductAction(product)),
+        changeProductAmount: payload => dispatch(changeProductAmountAction(payload))
     })
 };
 
-export default connect(null, mapDispatchToProps)(Products);
+export default connect(mapStateToProps, mapDispatchToProps)(Products);
