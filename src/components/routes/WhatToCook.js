@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import Dropdown from '../UI/Dropdown';
@@ -9,7 +10,7 @@ import sortRecipes from '../../functions/sortRecipes';
 
 import '../../styles/WhatToCook.css';
 
-export default class WhatToCook extends React.Component{
+class WhatToCook extends React.Component{
     state = {
         filters: [
             'all',
@@ -85,7 +86,6 @@ export default class WhatToCook extends React.Component{
             isPopupOpen,
             popupContent
         } = this.state;
-        const { products } = this.props;
 
         return (
             <div>
@@ -135,3 +135,9 @@ export default class WhatToCook extends React.Component{
     }
 }
 
+const mapStateToProps = state => ({
+    products: state.products,
+    recipes: state.recipes
+});
+
+export default connect(mapStateToProps)(WhatToCook);
