@@ -1,8 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import '../../styles/Recipes.css';
 
 import Recipe from '../Recipe';
+import { restrictedChars } from '../../constants';
+import actions from '../../store/actions';
 class Recipes extends React.Component{
     state = {
         isAddRecipeOpen: false,
@@ -47,7 +50,6 @@ class Recipes extends React.Component{
 
     onNewRecipeItemAmountChange = e => {
         const { keyCode } = this.state;
-        const { restrictedChars } = this.props;
 
         if (restrictedChars.includes(keyCode)) return;
 
@@ -150,4 +152,18 @@ class Recipes extends React.Component{
     }
 }
 
-export default Recipes;
+const mapStateToProps = state => ({
+    recipes: state.recipes
+});
+
+const mapDispatchToProps = dispatch => {
+    const {
+        addNewRecipe: addNewRecipeAction
+    } = actions.recipes;
+
+    return ({
+        addNewRecipe: recipe => dispatch(addNewRecipeAction(recipe))
+    })
+};
+
+export default connect(mapStateToProps , mapDispatchToProps)(Recipes);
