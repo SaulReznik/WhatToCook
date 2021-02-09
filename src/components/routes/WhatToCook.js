@@ -27,15 +27,6 @@ class WhatToCook extends React.Component{
         popupContent: null,
     }
 
-    // shouldComponentUpdate(nextProps){
-    //     console.log(this.props.recipes, nextProps.recipes);
-    //     return _.isEqual(this.props.recipes, nextProps.recipes);
-    // }
-
-    // componentDidUpdate(prevProps, prevState) {
-    //     console.log(_.isEqual(this.props.recipes, prevProps.recipes));
-    // }
-
     componentDidMount() {
         const { activeFilter, activeSortByItem } = this.state;
         const { products, recipes } = this.props;
