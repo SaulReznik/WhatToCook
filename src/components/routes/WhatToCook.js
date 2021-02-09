@@ -1,6 +1,8 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import _ from 'lodash';
+
+import '../../styles/WhatToCook.css';
 
 import Dropdown from '../UI/Dropdown';
 import RecipePopup from '../../components/RecipePopup';
@@ -8,127 +10,102 @@ import RecipePopup from '../../components/RecipePopup';
 import filterRecipes from '../../functions/filterRecipes';
 import sortRecipes from '../../functions/sortRecipes';
 
-import '../../styles/WhatToCook.css';
+// -------------- Local Constants ----------------- //
+const filters = [
+    'all',
+    'available products',
+];
 
-class WhatToCook extends React.Component{
-    state = {
-        filters: [
-            'all',
-            'available products',
-        ],
-        activeFilter: 'all',
-        sortByItems: [
-            'names',
-            'recent cooked'
-        ],
-        activeSortByItem: 'names',
-        processedRecipes: [...this.props.recipes],
-        isPopupOpen: false,
-        popupContent: null,
-    }
+const sortByItems = [
+    'names',
+    'recent cooked'
+];
 
-    componentDidMount() {
-        const { activeFilter, activeSortByItem } = this.state;
-        const { products, recipes } = this.props;
+const WhatToCook = () => {
+    const [ isPopupOpen, setIsPopupOpen ] = useState(false);
+    const [ popupContent, setPopupContent ] = useState(null);
+    const [ activeFilter, setActiveFilter] = useState('all');
+    const [ activeSortByItem, setActiveSortByItem ] = useState('names');
+    const [ processedRecipes, setProcessedRecipes ] = useState([]);
+
+    // --------------------- Store ----------------------//
+    const products = useSelector(state => state.products);
+    const recipes = useSelector(state => state.recipes);
+
+    // -------------------- Effects ---------------------//
+    useEffect(() => {
         const processedRecipes = filterRecipes(activeFilter, products, recipes)
 
-        this.setState(prevState => ({
-            processedRecipes: sortRecipes(activeSortByItem, prevState.processedRecipes)
-        }))
-    }
+        setProcessedRecipes(sortRecipes(activeSortByItem, processedRecipes));
+    }, [])
 
-    filterSelect = filter => {
-        const { products, recipes } = this.props;
-        this.setState(prevState => ({
-            activeFilter: filter,
-            processedRecipes: filterRecipes(filter, products, recipes)
-        }))
-    }
+    // --------------- Dropdown handlers ----------------//
+    const filterSelect = useCallback(filter => {
+        setActiveFilter(filter);
+        setProcessedRecipes(filterRecipes(filter, products, recipes));
+    }, [ activeFilter, processedRecipes ]);
 
-    sortByItemSelect = sortByItem => {
-        this.setState(prevState => ({ 
-            activeSortByItem: sortByItem,
-            processedRecipes: sortRecipes(sortByItem, prevState.processedRecipes),
-        }))
-    }
+    const sortByItemSelect = useCallback(sortByItem => {
+        setActiveSortByItem(sortByItem);
+        setProcessedRecipes(sortRecipes(sortByItem, prevState.processedRecipes));
+    }, [ activeSortByItem, processedRecipes ])
 
-    openPopup = item => {
-        this.setState({
-            isPopupOpen: true,
-            popupContent: item,
-        })
-    }
+    // ----------------- Popup handlers -----------------//
+    const openPopup = useCallback(content => {
+        setIsPopupOpen(true);
+        setPopupContent(content);
+    }, [ isPopupOpen, popupContent ]);
 
-    cookTodayBtnHandler = () => this.setState({ isPopupOpen: false })
+    const cookTodayBtnHandler = useCallback(() => {
+        setIsPopupOpen(false);
+    }, [ isPopupOpen ]);
 
-    closePopup = (e) => {
+    const closePopup = useCallback((e) => {
         if(e.target.id === 'recipePopupWrapper'){
-            this.setState({ isPopupOpen: false })
+            setIsPopupOpen(false);
         };   
-    }
+    });
 
-    render(){
-        const { 
-            filters, 
-            activeFilter,
-            sortByItems, 
-            activeSortByItem,
-            processedRecipes,
-            isPopupOpen,
-            popupContent
-        } = this.state;
-
-        return (
-            <div>
-                <h2>What To Cook</h2>
-
-                <div id='filterSortContainer'>
-
-                    <div className='filterSortItem'>
-                        <span>Show: </span>
-                        <Dropdown 
-                            activeItem={activeFilter}
-                            dropdownItems={filters}
-                            selectHandler={this.filterSelect}
-                        />
-                    </div>
-
-                    <div className='filterSortItem'>
-                        <span>Sort By: </span>
-                        <Dropdown 
-                            activeItem={activeSortByItem}
-                            dropdownItems={sortByItems}
-                            selectHandler={this.sortByItemSelect}
-                        />
-                    </div>
-
+    return (
+        <div>
+            <h2>What To Cook</h2>
+            <div id='filterSortContainer'>
+                <div className='filterSortItem'>
+                    <span>Show: </span>
+                    <Dropdown 
+                        activeItem={activeFilter}
+                        dropdownItems={filters}
+                        selectHandler={filterSelect}
+                    />
                 </div>
-
-                <ol>
-                    {
-                        processedRecipes.map((item, index) => (
-                            <li key={`${item.name}${index}`} onClick={() => this.openPopup(item)}>
-                                <h3>{item.name}</h3>
-                            </li>
-                        ))
-                    }
-                </ol>
-                {
-                    isPopupOpen ? 
-                    <RecipePopup 
-                        recipe={popupContent} 
-                        closePopup={this.closePopup}
-                        cookTodayBtnHandler={this.cookTodayBtnHandler}
-                    /> : null
-                }
+                <div className='filterSortItem'>
+                    <span>Sort By: </span>
+                    <Dropdown 
+                        activeItem={activeSortByItem}
+                        dropdownItems={sortByItems}
+                        selectHandler={sortByItemSelect}
+                    />
+                </div>
             </div>
-        )
-    }
+            <ol>
+                {
+                    processedRecipes.map((item, index) => (
+                        <li key={`${item.name}${index}`} onClick={() => openPopup(item)}>
+                            <h3>{item.name}</h3>
+                        </li>
+                    ))
+                }
+            </ol>
+            {
+                isPopupOpen ? 
+                <RecipePopup 
+                    recipe={popupContent} 
+                    closePopup={closePopup}
+                    cookTodayBtnHandler={cookTodayBtnHandler}
+                /> : null
+            }
+        </div>
+    )
 }
 
-const mapStateToProps = state => ({
-    products: state.products,
-    recipes: state.recipes
-});
-
-export default connect(mapStateToProps)(WhatToCook);
+export default WhatToCook;
