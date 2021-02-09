@@ -24,23 +24,21 @@ const Products = () => {
     const dispatch = useDispatch();
     const products = useSelector(state => state.products);
 
-    const keyDown = useCallback(
-        e => setKeyCode(e.keyCode),
-        [ keyCode ]    
-    );
+    // -------------- General hendlers ----------//
+    const keyDown = useCallback(e => {
+        setKeyCode(e.keyCode)
+    }, [ keyCode ]);
 
     // ------------------ Add Product --------------------//
-    const toggleInputs = useCallback(
-        () => setIsAddProductOpen(!isAddProductOpen),
-        [ isAddProductOpen ]
-    );
+    const toggleInputs = useCallback(() => {
+        setIsAddProductOpen(!isAddProductOpen)
+    }, [ isAddProductOpen ]);
 
-    const onNewItemNameChange = useCallback( 
-        e => setNewItem({ ...newItem, name: e.target.value }),
-        [ newItem ]
-    );
+    const onNewItemNameChange = useCallback(e => {
+        setNewItem({ ...newItem, name: e.target.value })
+    }, [ newItem ]);
 
-    const onNewItemAmountChange = useCallback( e => {
+    const onNewItemAmountChange = useCallback(e => {
         if (restrictedChars.includes(keyCode)) return;
 
         //This helps us to avoid 'e', 'first number 0' and max character problems 

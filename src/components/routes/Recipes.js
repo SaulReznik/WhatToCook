@@ -1,169 +1,166 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import '../../styles/Recipes.css';
-
 import Recipe from '../Recipe';
 import { restrictedChars } from '../../constants';
 import actions from '../../store/actions';
-class Recipes extends React.Component{
-    state = {
-        isAddRecipeOpen: false,
-        newRecipe: {
-            name: '',
-            ingredients: [],
-            instructions: ''
-        },
-        newRecipeItem: {
-            name: '',
-            amount: '0'
-        },
-        keyCode: null,
-    }
 
-    keyDown = e => this.setState({ keyCode: e.keyCode });
+// ---------------- Actions ------------------ //
+const {
+    addNewRecipe
+} = actions.recipes;
 
-    toggleAddNewRecipe = () => {
-        this.setState({isAddRecipeOpen: !this.state.isAddRecipeOpen})
-    }
+const Recipes = () => {
+    const [ keyCode, setKeyCode ] = useState(null);
+    const [ isAddRecipeOpen, setIsAddRecipeOpen ] = useState(false);
+    const [ newRecipeItem, setNewRecipeItem ] = useState({
+        name: '',
+        amount: '0'
+    });
+    const [ newRecipe, setNewRecipe ] = useState({
+        name: '',
+        ingredients: [],
+        instructions: ''
+    });
 
-    onNewRecipeNameChange = e => {
+    // ----------------- Store ---------------- //
+    const dispatch = useDispatch();
+    const recipes = useSelector(state => state.recipes);
+
+    // -------------- General hendlers ----------//
+    const keyDown = useCallback(e => {
+        setKeyCode(e.keyCode);
+    },[ keyCode ]);
+
+    const toggleAddNewRecipe = useCallback(() => {
+        setIsAddRecipeOpen(!isAddRecipeOpen);
+    }, [ isAddRecipeOpen ]);
+
+    // -------------- New Recipe Item --------------//
+    const onNewRecipeItemNameChange = useCallback(e => {
         const value = e.target.value;
 
-        this.setState(prevState => ({newRecipe: {
-            ...prevState.newRecipe,
-            name: value,
-        }}))
-    }
+        setNewRecipeItem({
+            ...newRecipeItem,
+            name: value
+        });
+    }, [ newRecipeItem ]);
 
-    onNewRecipeItemNameChange = e => {
-        const value = e.target.value;
-
-        this.setState(prevState => ({
-            ...prevState,
-            newRecipeItem: {
-                ...prevState.newRecipeItem,
-                name: value,
-            }
-        }))
-    }
-
-    onNewRecipeItemAmountChange = e => {
-        const { keyCode } = this.state;
-
+    const onNewRecipeItemAmountChange = useCallback(e => {
         if (restrictedChars.includes(keyCode)) return;
 
         const val = `${parseFloat(+e.target.value)}`.slice(0, 4);
 
-        this.setState(prevState => ({
-            newRecipeItem: {
-                ...prevState.newRecipeItem,
-                amount: val,
-            }
-        }))
-    }
+        setNewRecipeItem({
+            ...newRecipeItem,
+            amount: val
+        });
+    }, [ newRecipeItem ]);
 
-    onNewRecipeInstructionsChange = e => {
+    const onNewRecipeInstructionsChange = useCallback(e => {
         const value = e.target.value;
 
-        this.setState(prevState => ({
-            ...prevState.newRecipe,
+        setNewRecipe({
+            ...newRecipe,
             instructions: value
-        }))
-    }
+        })
+    }, [ newRecipe ])
 
-    newRecipeAdditionHandler = () => {
-        const { newRecipe, newRecipeItem } = this.state;
+    const newRecipeItemAddHandler = useCallback(() => {
 
-        this.setState(prevState => ({
-            ...prevState,
-            newRecipe: {
-                ...newRecipe,
-                ingredients: [
-                    ...newRecipe.ingredients,
-                    newRecipeItem,
-                ]
-            },
-            newRecipeItem: {
-                name: '',
-                amount: ''
-            },
-        }))
-    }
+        setNewRecipe({
+            ...newRecipe,
+            ingredients: [
+                ...newRecipe.ingredients,
+                newRecipeItem,
+            ]
+        });
 
-    render(){
-        const { newRecipe, newRecipeItem } = this.state;
-        const { recipes, addNewRecipe } = this.props;
+        setNewRecipeItem({
+            name: '',
+            amount: ''
+        });
 
-        return (
-            <div className="recipes">
-                <h1>Recipes</h1>
-                <button onClick={this.toggleAddNewRecipe} id='add-recipe-btn'>Add Recipe</button>
+    }, [ newRecipe, newRecipeItem, isAddRecipeOpen ]);
 
-                {
-                    this.state.isAddRecipeOpen ? 
-                        <div id='add-recipe'>
-                            <div>
-                                <span>Name:</span>
-                                <input 
-                                    value={newRecipe.name} 
-                                    onChange={e => this.onNewRecipeNameChange(e)}
-                                />
-                            </div>
-                            <div>
-                                <span>Ingredients:</span>
-                                <input value={newRecipeItem.name} onChange={this.onNewRecipeItemNameChange}/>
-                                <input 
-                                    onChange={(e) => this.onNewRecipeItemAmountChange(e)}
-                                    onKeyDown={(e) => this.keyDown(e)}
-                                    value={newRecipeItem.amount} 
-                                    type="number"
-                                />
-                                <button onClick={this.newRecipeAdditionHandler}>Add</button>
-                            </div>
-                            <ol>
-                                {newRecipe.ingredients.map((item, index) => (
-                                    <li key={index}>{item.name} - {item.amount}</li>
-                                ))}
-                            </ol>
-                            <div>
-                                <span>Instructions:</span>
-                                <textarea onChange={e => this.onNewRecipeInstructionsChange(e)} />
-                            </div>
-                            <button onClick={() => addNewRecipe(newRecipe)}>Add New Recipe</button>
-                        </div>
-                        : null
-                }
-                
-                <ol>
-                    {
-                        recipes.map((item, index) => (
-                            <Recipe 
-                                key={index}
-                                name={item.name}
-                                ingredients={item.ingredients}
-                                instructions={item.instructions}
+    // ------------- New Recipe ---------------//
+    const onNewRecipeNameChange = useCallback(e => {
+        const value = e.target.value;
+
+        setNewRecipe({
+            ...newRecipe,
+            name: value
+        });
+    }, [ newRecipe ]);
+
+    const handleAddNewRecipe = useCallback(() => {
+        dispatch(addNewRecipe(newRecipe));
+
+        setNewRecipe({
+            name: '',
+            ingredients: [],
+            instructions: ''
+        });
+
+        setIsAddRecipeOpen(!isAddRecipeOpen); 
+    }, [ newRecipe ]);
+
+    return (
+        <div className="recipes">
+            <h1>Recipes</h1>
+            <button onClick={toggleAddNewRecipe} id='add-recipe-btn'>Add Recipe</button>
+            {
+                isAddRecipeOpen ? 
+                    <div id='add-recipe'>
+                        <div>
+                            <span>Name:</span>
+                            <input 
+                                value={newRecipe.name} 
+                                onChange={e => onNewRecipeNameChange(e)}
                             />
-                        ))
-                    }
-                </ol>
-            </div>
-        )
-    }
-}
-
-const mapStateToProps = state => ({
-    recipes: state.recipes
-});
-
-const mapDispatchToProps = dispatch => {
-    const {
-        addNewRecipe: addNewRecipeAction
-    } = actions.recipes;
-
-    return ({
-        addNewRecipe: recipe => dispatch(addNewRecipeAction(recipe))
-    })
+                        </div>
+                        <div>
+                            <span>Ingredients:</span>
+                            <input value={newRecipeItem.name} onChange={(e) => onNewRecipeItemNameChange(e)}/>
+                            <input 
+                                onChange={(e) => onNewRecipeItemAmountChange(e)}
+                                onKeyDown={(e) => keyDown(e)}
+                                value={newRecipeItem.amount} 
+                                type="number"
+                            />
+                            <button onClick={newRecipeItemAddHandler}>Add</button>
+                        </div>
+                        <ol>
+                            {newRecipe.ingredients.map((item, index) => (
+                                <li key={index}>{item.name} - {item.amount}</li>
+                            ))}
+                        </ol>
+                        <div>
+                            <span>Instructions:</span>
+                            <textarea 
+                                value={newRecipe.instructions} 
+                                onChange={e => onNewRecipeInstructionsChange(e)} 
+                            />
+                        </div>
+                        <button onClick={handleAddNewRecipe}>Add New Recipe</button>
+                    </div>
+                    : null
+            }
+            <ol>
+                {
+                    recipes.map((item, index) => (
+                        <Recipe 
+                            key={index}
+                            name={item.name}
+                            ingredients={item.ingredients}
+                            instructions={item.instructions}
+                        />
+                    ))
+                }
+            </ol>
+        </div>
+    );
 };
 
-export default connect(mapStateToProps , mapDispatchToProps)(Recipes);
+export default Recipes;
