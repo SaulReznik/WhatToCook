@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import '../../styles/Recipes.css';
@@ -29,25 +29,21 @@ const Recipes = () => {
     const recipes = useSelector(state => state.recipes);
 
     // -------------- General hendlers ----------//
-    const keyDown = useCallback(e => {
-        setKeyCode(e.keyCode);
-    },[ keyCode ]);
+    const keyDown = e => setKeyCode(e.keyCode);
 
-    const toggleAddNewRecipe = useCallback(() => {
-        setIsAddRecipeOpen(!isAddRecipeOpen);
-    }, [ isAddRecipeOpen ]);
+    const toggleAddNewRecipe = () => setIsAddRecipeOpen(!isAddRecipeOpen);
 
     // -------------- New Recipe Item --------------//
-    const onNewRecipeItemNameChange = useCallback(e => {
+    const onNewRecipeItemNameChange = e => {
         const value = e.target.value;
 
         setNewRecipeItem({
             ...newRecipeItem,
             name: value
         });
-    }, [ newRecipeItem ]);
+    };
 
-    const onNewRecipeItemAmountChange = useCallback(e => {
+    const onNewRecipeItemAmountChange = e => {
         if (restrictedChars.includes(keyCode)) return;
 
         const val = `${parseFloat(+e.target.value)}`.slice(0, 4);
@@ -56,18 +52,18 @@ const Recipes = () => {
             ...newRecipeItem,
             amount: val
         });
-    }, [ newRecipeItem ]);
+    };
 
-    const onNewRecipeInstructionsChange = useCallback(e => {
+    const onNewRecipeInstructionsChange = e => {
         const value = e.target.value;
 
         setNewRecipe({
             ...newRecipe,
             instructions: value
         })
-    }, [ newRecipe ])
+    };
 
-    const newRecipeItemAddHandler = useCallback(() => {
+    const newRecipeItemAddHandler = () => {
 
         setNewRecipe({
             ...newRecipe,
@@ -82,19 +78,19 @@ const Recipes = () => {
             amount: ''
         });
 
-    }, [ newRecipe, newRecipeItem, isAddRecipeOpen ]);
+    };
 
     // ------------- New Recipe ---------------//
-    const onNewRecipeNameChange = useCallback(e => {
+    const onNewRecipeNameChange = e => {
         const value = e.target.value;
 
         setNewRecipe({
             ...newRecipe,
             name: value
         });
-    }, [ newRecipe ]);
+    };
 
-    const handleAddNewRecipe = useCallback(() => {
+    const handleAddNewRecipe = () => {
         dispatch(addNewRecipe(newRecipe));
 
         setNewRecipe({
@@ -104,7 +100,7 @@ const Recipes = () => {
         });
 
         setIsAddRecipeOpen(!isAddRecipeOpen); 
-    }, [ newRecipe ]);
+    };
 
     return (
         <div className="recipes">
@@ -117,15 +113,15 @@ const Recipes = () => {
                             <span>Name:</span>
                             <input 
                                 value={newRecipe.name} 
-                                onChange={e => onNewRecipeNameChange(e)}
+                                onChange={onNewRecipeNameChange}
                             />
                         </div>
                         <div>
                             <span>Ingredients:</span>
-                            <input value={newRecipeItem.name} onChange={(e) => onNewRecipeItemNameChange(e)}/>
+                            <input value={newRecipeItem.name} onChange={onNewRecipeItemNameChange}/>
                             <input 
-                                onChange={(e) => onNewRecipeItemAmountChange(e)}
-                                onKeyDown={(e) => keyDown(e)}
+                                onChange={onNewRecipeItemAmountChange}
+                                onKeyDown={keyDown}
                                 value={newRecipeItem.amount} 
                                 type="number"
                             />
@@ -140,7 +136,7 @@ const Recipes = () => {
                             <span>Instructions:</span>
                             <textarea 
                                 value={newRecipe.instructions} 
-                                onChange={e => onNewRecipeInstructionsChange(e)} 
+                                onChange={onNewRecipeInstructionsChange} 
                             />
                         </div>
                         <button onClick={handleAddNewRecipe}>Add New Recipe</button>

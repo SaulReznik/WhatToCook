@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import "../../styles/Products.css";
@@ -25,42 +25,36 @@ const Products = () => {
     const products = useSelector(state => state.products);
 
     // -------------- General hendlers ----------//
-    const keyDown = useCallback(e => {
-        setKeyCode(e.keyCode)
-    }, [ keyCode ]);
+    const keyDown = e => setKeyCode(e.keyCode);
 
     // ------------------ Add Product --------------------//
-    const toggleInputs = useCallback(() => {
-        setIsAddProductOpen(!isAddProductOpen)
-    }, [ isAddProductOpen ]);
+    const toggleInputs = () => setIsAddProductOpen(!isAddProductOpen);
 
-    const onNewItemNameChange = useCallback(e => {
-        setNewItem({ ...newItem, name: e.target.value })
-    }, [ newItem ]);
+    const onNewItemNameChange = e => setNewItem({ ...newItem, name: e.target.value });
 
-    const onNewItemAmountChange = useCallback(e => {
+    const onNewItemAmountChange = e => {
         if (restrictedChars.includes(keyCode)) return;
 
         //This helps us to avoid 'e', 'first number 0' and max character problems 
         const val = `${parseFloat(+e.target.value)}`.slice(0, 4);
 
         setNewItem({ ...newItem, amount: val });
-    }, [ newItem ]);
+    };
 
-    const handleSubmit = useCallback(() => { 
+    const handleSubmit = () => { 
         dispatch(addNewProduct(newItem));
 
         setNewItem({ name: "", amount: 0 });
-    }, [ newItem ]);
+    };
 
     // ----------------- Products List ----------------------//
-    const onAmountChange = useCallback((e, index) => {
+    const onAmountChange = (e, index) => {
         if(restrictedChars.includes(keyCode)) return;
         
         const payload = { e, index };
 
         dispatch(changeProductAmount(payload));
-    }, []);
+    };
 
     return(
         <div>
@@ -71,14 +65,14 @@ const Products = () => {
                 <div id="add-product-container">
                     <div id="inputs-container">
                         <input
-                            onChange={(e) => onNewItemNameChange(e)}
+                            onChange={onNewItemNameChange}
                             value={newItem.name}
                             className="product-input"
                             type="text"
                         />
                         <input
-                            onChange={(e) => onNewItemAmountChange(e)}
-                            onKeyDown={(e) => keyDown(e)}
+                            onChange={onNewItemAmountChange}
+                            onKeyDown={keyDown}
                             value={newItem.amount}
                             className="amount-input"
                             type="number"
@@ -96,7 +90,7 @@ const Products = () => {
                             <input 
                                 className="amount-input" 
                                 onChange={(e) => onAmountChange(e, index)} 
-                                onKeyDown={(e) => keyDown(e)}
+                                onKeyDown={keyDown}
                                 value={products[index].amount} 
                                 type="number" 
                             />

@@ -1,11 +1,9 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 
 const Recipe = props => {
     const [ isOpen, setIsOpen ] = useState(false);
 
-    const togglePanel = useCallback(() => {
-        setIsOpen(!isOpen);
-    }, [isOpen]); 
+    const togglePanel = () => setIsOpen(!isOpen); 
 
     const { ingredients, instructions, name } = props;
 

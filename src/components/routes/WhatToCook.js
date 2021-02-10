@@ -40,31 +40,31 @@ const WhatToCook = () => {
     }, [])
 
     // --------------- Dropdown handlers ----------------//
-    const filterSelect = useCallback(filter => {
+    const filterSelect = filter => {
         setActiveFilter(filter);
         setProcessedRecipes(filterRecipes(filter, products, recipes));
-    }, [ activeFilter, processedRecipes ]);
+    };
 
-    const sortByItemSelect = useCallback(sortByItem => {
+    const sortByItemSelect = sortByItem => {
         setActiveSortByItem(sortByItem);
         setProcessedRecipes(sortRecipes(sortByItem, prevState.processedRecipes));
-    }, [ activeSortByItem, processedRecipes ])
+    };
 
     // ----------------- Popup handlers -----------------//
-    const openPopup = useCallback(content => {
+    const openPopup = content => {
         setIsPopupOpen(true);
         setPopupContent(content);
-    }, [ isPopupOpen, popupContent ]);
+    };
 
     const cookTodayBtnHandler = useCallback(() => {
         setIsPopupOpen(false);
     }, [ isPopupOpen ]);
 
-    const closePopup = useCallback((e) => {
+    const closePopup = useCallback(e => {
         if(e.target.id === 'recipePopupWrapper'){
             setIsPopupOpen(false);
         };   
-    });
+    }, [ isPopupOpen ]);
 
     return (
         <div>
