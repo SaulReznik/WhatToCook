@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import "../../styles/Products.css";
+// import "../../styles/Products.css";
 import { restrictedChars } from '../../constants';
 import actions from '../../store/actions';
 

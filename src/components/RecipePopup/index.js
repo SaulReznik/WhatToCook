@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../styles/RecipePopup.css';
+// import '../styles/RecipePopup.css';
 
 const RecipePopup = props => {
     const { recipe, closePopup, cookTodayBtnHandler } = props;

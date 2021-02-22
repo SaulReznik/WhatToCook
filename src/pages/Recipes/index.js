@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import '../../styles/Recipes.css';
-import Recipe from '../Recipe';
+// import '../../styles/Recipes.css';
+import Recipe from '../../components/Recipe';
 import { restrictedChars } from '../../constants';
 import actions from '../../store/actions';
 

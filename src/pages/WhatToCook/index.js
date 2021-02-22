@@ -2,9 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import _ from 'lodash';
 
-import '../../styles/WhatToCook.css';
+// import '../../styles/WhatToCook.css';
 
-import Dropdown from '../UI/Dropdown';
+import Dropdown from '../../UI/Dropdown';
 import RecipePopup from '../../components/RecipePopup';
 
 import filterRecipes from '../../functions/filterRecipes';

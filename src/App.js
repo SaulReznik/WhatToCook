@@ -6,9 +6,9 @@ import "./App.css";
 import Sidebar from "./components/Sidebar";
 
 //Routes
-import WhatToCook from './components/routes/WhatToCook';
-import Products from './components/routes/Products';
-import Recipes from './components/routes/Recipes';
+import WhatToCook from './pages/WhatToCook';
+import Products from './pages/Products';
+import Recipes from './pages/Recipes';
 
 const App = () => (
     <div className="App">
