@@ -1,22 +1,29 @@
 import React from 'react';
-//import "../styles/Sidebar.css";
 import { Link } from 'react-router-dom';
 
-const Sidebar = () => (
-    <div id="sidebar">
-        <h1>Sidebar</h1>
-        <div id="links">
-            <div className="link-container">
-                <Link to='/'>What To Cook</Link>
-            </div>
-            <div className="link-container">
-                <Link to='/products'>Products</Link>
-            </div>
-            <div className="link-container">
-                <Link to='/recipes'>Recipes</Link>
+import useStyles from './styles';
+
+const Sidebar = () => {
+    // ----------------- styles --------------- //
+    const classes = useStyles();
+    const { sidebar, links, linkContainer } = classes;
+
+    return (
+        <div className={sidebar}>
+            <h1>Sidebar</h1>
+            <div className={links}>
+                <div className={linkContainer}>
+                    <Link to='/'>What To Cook</Link>
+                </div>
+                <div className={linkContainer}>
+                    <Link to='/products'>Products</Link>
+                </div>
+                <div className={linkContainer}>
+                    <Link to='/recipes'>Recipes</Link>
+                </div>
             </div>
         </div>
-    </div>
-)
+    )
+}
 
 export default Sidebar;

@@ -1,13 +1,17 @@
 import React from 'react';
 
-// import '../styles/RecipePopup.css';
+import useStyles from './styles';
 
 const RecipePopup = props => {
     const { recipe, closePopup, cookTodayBtnHandler } = props;
 
+    // ------------------ styles ------------------- //
+    const classes = useStyles();
+    const { popupWrapper, popupContainer } = classes;
+
     return (
-        <div onClick={e => closePopup(e)} id='recipePopupWrapper'>
-            <div id='recipePopupContainer'>
+        <div onClick={e => closePopup(e)} className={popupWrapper}>
+            <div className={popupContainer}>
                 <h3>{recipe.name}</h3>
                 <ol>
                     {

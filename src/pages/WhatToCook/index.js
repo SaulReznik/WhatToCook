@@ -61,7 +61,7 @@ const WhatToCook = () => {
     }, [ isPopupOpen ]);
 
     const closePopup = useCallback(e => {
-        if(e.target.id === 'recipePopupWrapper'){
+        if(e.target.className.includes('popupWrapper')){
             setIsPopupOpen(false);
         };   
     }, [ isPopupOpen ]);
