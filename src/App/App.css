@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap');
+
+button:focus {
+  outline: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+.App {
+  height: 100vh;
+  width: 100%;
+  font-family: 'Lexend Deca', sans-serif;
+  display: flex;
+  flex-direction: row;
+}
+
+.body {
+  background-color: rgb(248, 98, 43);
+  height: 100%;
+  width: 75%;
+  overflow-y: auto;
+  overflow-x: auto;
+  box-sizing: border-box;
+}
