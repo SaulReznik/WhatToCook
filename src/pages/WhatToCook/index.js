@@ -2,9 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import _ from 'lodash';
 
-import '../../styles/WhatToCook.css';
+// import './WhatToCook.css';
+import useStyles from './styles';
 
-import Dropdown from '../UI/Dropdown';
+import Dropdown from '../../UI/Dropdown';
 import RecipePopup from '../../components/RecipePopup';
 
 import filterRecipes from '../../functions/filterRecipes';
@@ -31,6 +32,10 @@ const WhatToCook = () => {
     // --------------------- Store ----------------------//
     const products = useSelector(state => state.products);
     const recipes = useSelector(state => state.recipes);
+
+    // -------------------- Styles ----------------------//
+    const classes = useStyles();
+    const { filterSortContainer, filterSortItem } = classes;
 
     // -------------------- Effects ---------------------//
     useEffect(() => {
@@ -61,7 +66,7 @@ const WhatToCook = () => {
     }, [ isPopupOpen ]);
 
     const closePopup = useCallback(e => {
-        if(e.target.id === 'recipePopupWrapper'){
+        if(e.target.className.includes('popupWrapper')){
             setIsPopupOpen(false);
         };   
     }, [ isPopupOpen ]);
@@ -69,8 +74,8 @@ const WhatToCook = () => {
     return (
         <div>
             <h2>What To Cook</h2>
-            <div id='filterSortContainer'>
-                <div className='filterSortItem'>
+            <div className={filterSortContainer}>
+                <div className={filterSortItem}>
                     <span>Show: </span>
                     <Dropdown 
                         activeItem={activeFilter}
@@ -78,7 +83,7 @@ const WhatToCook = () => {
                         selectHandler={filterSelect}
                     />
                 </div>
-                <div className='filterSortItem'>
+                <div className={filterSortItem}>
                     <span>Sort By: </span>
                     <Dropdown 
                         activeItem={activeSortByItem}
