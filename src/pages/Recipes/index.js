@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-// import '../../styles/Recipes.css';
+// import './Recipes.css';
+import useStyles from './styles';
+
 import Recipe from '../../components/Recipe';
+
 import { restrictedChars } from '../../constants';
 import actions from '../../store/actions';
 
@@ -27,6 +30,10 @@ const Recipes = () => {
     // ----------------- Store ---------------- //
     const dispatch = useDispatch();
     const recipes = useSelector(state => state.recipes);
+
+    // ---------------- Styles ---------------- //
+    const classes = useStyles();
+    const { addRecipeBtn } = classes;
 
     // -------------- General hendlers ----------//
     const keyDown = e => setKeyCode(e.keyCode);
@@ -105,7 +112,7 @@ const Recipes = () => {
     return (
         <div className="recipes">
             <h1>Recipes</h1>
-            <button onClick={toggleAddNewRecipe} id='add-recipe-btn'>Add Recipe</button>
+            <button onClick={toggleAddNewRecipe} className={addRecipeBtn}>Add Recipe</button>
             {
                 isAddRecipeOpen ? 
                     <div id='add-recipe'>
