@@ -12,6 +12,9 @@ const useStyles = createUseStyles({
             button: {
                 '&:after': {
                     outline: 'none'
+                },
+                '&:hover': {
+                    cursor: 'pointer'
                 }
             },
             input: {
@@ -22,6 +25,7 @@ const useStyles = createUseStyles({
         }
     },
     body: {
+        textAlign: 'center',
         backgroundColor: 'rgb(248, 98, 43)',
         height: '100%',
         width: '75%',

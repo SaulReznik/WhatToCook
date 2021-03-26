@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-// import "../../styles/Products.css";
+// import "./Products.css";
+import useStyles from './styles';
+
 import { restrictedChars } from '../../constants';
 import actions from '../../store/actions';
 
@@ -23,6 +25,13 @@ const Products = () => {
     // ----------------- Store ---------------- //
     const dispatch = useDispatch();
     const products = useSelector(state => state.products);
+
+    // ----------------- styles --------------- //
+    const classes = useStyles();
+    const { 
+        productsWrapper, enterNewProductBtn, addProductContainer, inputsContainer,
+        productInput, amountInput, submitBtn, productItem, deleteBtn 
+    } = classes;
 
     // -------------- General hendlers ----------//
     const keyDown = e => setKeyCode(e.keyCode);
@@ -57,27 +66,27 @@ const Products = () => {
     };
 
     return(
-        <div>
+        <div className={productsWrapper}>
             <h1>Products</h1>
-            <button onClick={toggleInputs} id="enter-new-product-button">Enter New Product</button>
+            <button onClick={toggleInputs} className={enterNewProductBtn}>Enter New Product</button>
             {
                 isAddProductOpen ? 
-                <div id="add-product-container">
-                    <div id="inputs-container">
+                <div className={addProductContainer}>
+                    <div className={inputsContainer}>
                         <input
                             onChange={onNewItemNameChange}
                             value={newItem.name}
-                            className="product-input"
+                            className={productInput}
                             type="text"
                         />
                         <input
                             onChange={onNewItemAmountChange}
                             onKeyDown={keyDown}
                             value={newItem.amount}
-                            className="amount-input"
+                            className={amountInput}
                             type="number"
                         />
-                        <button onClick={handleSubmit} id="submit-button">Add New Product</button>
+                        <button onClick={handleSubmit} className={submitBtn}>Add New Product</button>
                     </div>
                 </div> 
                 : null
@@ -85,17 +94,17 @@ const Products = () => {
             {
                 products.map((item, index) => {
                     return(
-                        <div className="product-item" key={index}>
-                            <input className="product-input" readOnly value={products[index].name} type="text" />
+                        <div className={productItem} key={index}>
+                            <input className={productInput} readOnly value={products[index].name} type="text" />
                             <input 
-                                className="amount-input" 
+                                className={amountInput}
                                 onChange={(e) => onAmountChange(e, index)} 
                                 onKeyDown={keyDown}
                                 value={products[index].amount} 
                                 type="number" 
                             />
                             <button 
-                                className="delete-button"
+                                className={deleteBtn}
                                 onClick={() => dispatch(deleteProduct(index))}
                             >
                                 Delete
