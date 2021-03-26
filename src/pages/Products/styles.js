@@ -37,7 +37,7 @@ const useStyles = createUseStyles({
             boxSizing: 'border-box'
         },
         '& input': {
-            backgroundColor: 'black',
+            backgroundColor: 'white',
             border: 'none',
             fontFamily: ['Lexend Deca', 'sans-serif']
         },
@@ -50,7 +50,10 @@ const useStyles = createUseStyles({
         padding: 5,
         borderRadius: [[5, 0, 0, 5]],
         fontSize: '1rem',
-        border: 'none'
+        border: 'none',
+        boxSizing: 'border-box',
+        height: 40,
+        fontFamily: ['Lexend Deca', 'sans-serif']
     },
     amountInput: {
         '-moz-appearance': 'textfield',
@@ -58,7 +61,10 @@ const useStyles = createUseStyles({
         textAlign: 'center',
         fontSize: '1.5rem',
         border: [[1, 'solid', 'black']],
-        borderRadius: [[0, 5, 5, 0]]
+        borderRadius: [[0, 5, 5, 0]],
+        boxSizing: 'border-box',
+        height: 40,
+        fontFamily: ['Lexend Deca', 'sans-serif']
     },
     submitBtn: {
         display: 'inline-block',
@@ -76,21 +82,14 @@ const useStyles = createUseStyles({
         width: '100%',
         margin: [[5, 0]],
         backgroundColor: 'rgb(0, 117, 102)',
-        boxSizing: 'border-box',
-        '&*': {
-            boxSizing: 'border-box',
-            height: 40
-        },
-        '&input': {
-            fontFamily: ['Lexend Deca', 'sans-serif']
-        }
+        boxSizing: 'border-box'
     },
     deleteBtn: {
         margin: [[0, 20]],
         height: 30,
         border: 'none',
         borderRadius: 5,
-        fontFamily: ['Lexend Deca', 'sans-serif'],
+        fontFamily: ['Lexend Deca', 'sans-serif']
     }
 });
 
