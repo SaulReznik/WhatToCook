@@ -6,7 +6,7 @@ import useStyles from './styles';
 
 import Recipe from '../../components/Recipe';
 
-import { restrictedChars } from '../../constants';
+import { restrictedChars } from '../../constants.ts';
 import actions from '../../store/actions';
 
 // ---------------- Actions ------------------ //

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // import "./Products.css";
 import useStyles from './styles';
 
-import { restrictedChars } from '../../constants';
+import { restrictedChars } from '../../constants.ts';
 import actions from '../../store/actions';
 
 // ---------------- Actions ------------------ //
