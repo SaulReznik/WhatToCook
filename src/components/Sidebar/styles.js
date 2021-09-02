@@ -2,9 +2,10 @@ import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
     sidebar: {
-        height: '100%',
         width: '25%',
-        backgroundColor: 'rgb(250, 140, 100)',
+        padding: '5px',
+        backgroundColor: '#33d9b2',
+        zIndex: '1',
         textAlign: 'center',
         '@global': {
             a: {
@@ -13,6 +14,13 @@ const useStyles = createUseStyles({
             }
         }
     },
+    '@media screen and (max-width: 720px)': {
+        sidebar: {
+            width: '100%',
+            height: 'max-content',
+            padding: '15px 0',
+        },
+      },
     links: {
         width: '100%',
         display: 'flex',
