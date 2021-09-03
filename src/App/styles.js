@@ -26,7 +26,7 @@ const useStyles = createUseStyles({
     },
     body: {
         width: '75%',
-        padding: '5px',
+        padding: 5,
         textAlign: 'center',
         overflowY: 'auto',
         overflowX: 'auto',

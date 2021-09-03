@@ -3,7 +3,7 @@ import { createUseStyles } from 'react-jss';
 const useStyles = createUseStyles({
     sidebar: {
         width: '25%',
-        padding: '5px',
+        padding: 5,
         backgroundColor: '#33d9b2',
         zIndex: '1',
         textAlign: 'center',
@@ -18,7 +18,7 @@ const useStyles = createUseStyles({
         sidebar: {
             width: '100%',
             height: 'max-content',
-            padding: '15px 0',
+            padding: [15, 0],
         },
       },
     links: {
