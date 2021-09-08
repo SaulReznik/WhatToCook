@@ -2,15 +2,40 @@
     height: 25px;
     width: 200px;
     text-align: left;
+    background-color: transparent;
+    border: 1px solid;
+    margin: 5px;
 }
 
 .dropdownItems {
     position: absolute;
+    width: 200px;
+    margin: 5px;
 }
 
 .dropdownItem {
-    height: inherit;
-    padding-left: 5px; 
     text-align: left;
     z-index: 50;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.dropdownItem:hover {
+    color: #33d9b2;
+}
+
+@media only screen and (max-width: 720px) {
+    .dropdownBtn,
+    .dropdownItems {
+        width: 150px;
+    }
+
+    .dropdownBtn {
+        margin-bottom: 0;
+    }
+
+    .dropdownItems {
+        background-color: #f7f1e3;
+        margin-top: 0;
+    }
 }

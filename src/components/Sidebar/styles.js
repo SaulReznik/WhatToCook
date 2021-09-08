@@ -30,8 +30,9 @@ const useStyles = createUseStyles({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        height: 50,
-        border: [[1, 'solid', 'black']]
+        border: [1, 'solid', 'black'],
+        padding: [10, 0],
+        margin: [3]
     }
 });
 
