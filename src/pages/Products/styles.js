@@ -53,7 +53,7 @@ const useStyles = createUseStyles({
         width: '40%',
         height: 40,
         padding: 5,
-        borderRadius: [[5, 0, 0, 5]],
+        borderRadius: [5, 0, 0, 5],
         fontSize: '1rem',
         border: [1, 'solid', '#000000'],
         boxSizing: 'border-box',
@@ -91,7 +91,7 @@ const useStyles = createUseStyles({
         boxSizing: 'border-box',
     },
     deleteBtn: {
-        margin: [[0, 20]],
+        margin: [0, 20],
         border: 'none',
         borderRadius: 5,
         fontFamily: ['Lexend Deca', 'sans-serif'],
