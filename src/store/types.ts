@@ -20,6 +20,6 @@ export interface IInitialState {
 }
 
 export interface IProductAmountAction {
-  value: string;
+  amount: string;
   index: number;
 }

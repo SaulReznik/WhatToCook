@@ -7,8 +7,7 @@ export const products = (state = [], action: Record<string, any>) => {
         action.product
       ];
     case 'CHANGE_PRODUCT_AMOUNT':
-      const { value, index } = action.payload;
-      const amount = `${parseFloat(value).toFixed(2)}`;
+      const { amount, index } = action.payload;
       return state.map((product, i) => (
         i === index
           ? { ...(product as Record<string, string>), amount }

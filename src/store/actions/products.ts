@@ -5,9 +5,9 @@ const addNewProduct = (product: IProduct) => ({
     product
 });
 
-const changeProductAmount = (amount: IProductAmountAction) => ({
+const changeProductAmount = (payload: IProductAmountAction) => ({
     type: 'CHANGE_PRODUCT_AMOUNT',
-    amount
+    payload
 });
 
 const deleteProduct = (index: string) => ({
