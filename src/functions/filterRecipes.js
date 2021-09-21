@@ -1,7 +1,7 @@
 export default (filter, products, recipes) => {
     if (filter === "all") {
         return recipes;
-    } else if (filter === "available products") {
+    } if (filter === "available products") {
         //Creating object where the keys will be the names of products
         //And the values are the product objects
         const productsObj = products.reduce((currObj, item) => {

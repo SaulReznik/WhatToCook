@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 // import './Recipes.css';
@@ -6,8 +6,9 @@ import useStyles from './styles';
 
 import Recipe from '../../components/Recipe';
 
-import { restrictedChars } from '../../constants.ts';
+import { restrictedChars } from '../../constants';
 import actions from '../../store/actions';
+import { IRecipe } from 'store/types';
 
 // ---------------- Actions ------------------ //
 const {
@@ -15,13 +16,13 @@ const {
 } = actions.recipes;
 
 const Recipes = () => {
-    const [ keyCode, setKeyCode ] = useState(null);
-    const [ isAddRecipeOpen, setIsAddRecipeOpen ] = useState(false);
-    const [ newRecipeItem, setNewRecipeItem ] = useState({
+    const [keyCode, setKeyCode] = useState(null as any);
+    const [isAddRecipeOpen, setIsAddRecipeOpen] = useState(false);
+    const [newRecipeItem, setNewRecipeItem] = useState({
         name: '',
         amount: '0'
     });
-    const [ newRecipe, setNewRecipe ] = useState({
+    const [newRecipe, setNewRecipe] = useState<IRecipe>({
         name: '',
         ingredients: [],
         instructions: ''
@@ -29,19 +30,19 @@ const Recipes = () => {
 
     // ----------------- Store ---------------- //
     const dispatch = useDispatch();
-    const recipes = useSelector(state => state.recipes);
+    const recipes: IRecipe[] = useSelector((state: any) => state.recipes);
 
     // ---------------- Styles ---------------- //
     const classes = useStyles();
     const { addRecipeBtn } = classes;
 
     // -------------- General hendlers ----------//
-    const keyDown = e => setKeyCode(e.keyCode);
+    const keyDown: React.KeyboardEventHandler = e => setKeyCode(e.keyCode);
 
     const toggleAddNewRecipe = () => setIsAddRecipeOpen(!isAddRecipeOpen);
 
     // -------------- New Recipe Item --------------//
-    const onNewRecipeItemNameChange = e => {
+    const onNewRecipeItemNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
 
         setNewRecipeItem({
@@ -50,18 +51,18 @@ const Recipes = () => {
         });
     };
 
-    const onNewRecipeItemAmountChange = e => {
+    const onNewRecipeItemAmountChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (restrictedChars.includes(keyCode)) return;
-
-        const val = `${parseFloat(+e.target.value)}`.slice(0, 4);
+        const { value } = e.target;
+        const amount = `${parseFloat(value)}`.slice(0, 4);
 
         setNewRecipeItem({
             ...newRecipeItem,
-            amount: val
+            amount
         });
     };
 
-    const onNewRecipeInstructionsChange = e => {
+    const onNewRecipeInstructionsChange: React.ChangeEventHandler<HTMLTextAreaElement> = e => {
         const value = e.target.value;
 
         setNewRecipe({
@@ -88,7 +89,7 @@ const Recipes = () => {
     };
 
     // ------------- New Recipe ---------------//
-    const onNewRecipeNameChange = e => {
+    const onNewRecipeNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
 
         setNewRecipe({
@@ -106,7 +107,7 @@ const Recipes = () => {
             instructions: ''
         });
 
-        setIsAddRecipeOpen(!isAddRecipeOpen); 
+        setIsAddRecipeOpen(!isAddRecipeOpen);
     };
 
     return (
@@ -114,22 +115,22 @@ const Recipes = () => {
             <h1>Recipes</h1>
             <button onClick={toggleAddNewRecipe} className={addRecipeBtn}>Add Recipe</button>
             {
-                isAddRecipeOpen ? 
+                isAddRecipeOpen ?
                     <div id='add-recipe'>
                         <div>
                             <span>Name:</span>
-                            <input 
-                                value={newRecipe.name} 
+                            <input
+                                value={newRecipe.name}
                                 onChange={onNewRecipeNameChange}
                             />
                         </div>
                         <div>
                             <span>Ingredients:</span>
-                            <input value={newRecipeItem.name} onChange={onNewRecipeItemNameChange}/>
-                            <input 
+                            <input value={newRecipeItem.name} onChange={onNewRecipeItemNameChange} />
+                            <input
                                 onChange={onNewRecipeItemAmountChange}
                                 onKeyDown={keyDown}
-                                value={newRecipeItem.amount} 
+                                value={newRecipeItem.amount}
                                 type="number"
                             />
                             <button onClick={newRecipeItemAddHandler}>Add</button>
@@ -141,9 +142,9 @@ const Recipes = () => {
                         </ol>
                         <div>
                             <span>Instructions:</span>
-                            <textarea 
-                                value={newRecipe.instructions} 
-                                onChange={onNewRecipeInstructionsChange} 
+                            <textarea
+                                value={newRecipe.instructions}
+                                onChange={onNewRecipeInstructionsChange}
                             />
                         </div>
                         <button onClick={handleAddNewRecipe}>Add New Recipe</button>
@@ -153,7 +154,7 @@ const Recipes = () => {
             <ol>
                 {
                     recipes.map((item, index) => (
-                        <Recipe 
+                        <Recipe
                             key={index}
                             name={item.name}
                             ingredients={item.ingredients}
