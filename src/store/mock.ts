@@ -1,20 +1,14 @@
-export default {
+import { IInitialState } from "./types";
+
+// TODO: Get rid of intial state
+const initialState: IInitialState = {
     products: [
-        {
-            name: "Potato",
-            amount: '5'
-        },
-        {name: "Butter", amount: "1000",},
-        {name: "Salt", amount: "2000"},
-        {name: "Egg", amount: "10"},
-        {
-            name: "Tomato",
-            amount: '5'
-        },
-        {
-            name: "Sour Milk",
-            amount: '5'
-        }
+        { name: "Potato", amount: '5' },
+        { name: "Butter", amount: "1000", },
+        { name: "Salt", amount: "2000" },
+        { name: "Egg", amount: "10" },
+        { name: "Tomato", amount: '5' },
+        { name: "Sour Milk", amount: '5' }
     ],
     recipes: [
         {
@@ -38,10 +32,10 @@ export default {
         {
             name: 'Tomato Omlet',
             ingredients: [
-                {name: "Tomato",amount: "1",},
-                {name: "Egg", amount: "1"},
-                {name: "Salt", amount: "10"},
-                {name: "Butter", amount: "40"}
+                { name: "Tomato", amount: "1", },
+                { name: "Egg", amount: "1" },
+                { name: "Salt", amount: "10" },
+                { name: "Butter", amount: "40" }
             ],
             instructions: "Some text",
         },
@@ -57,3 +51,5 @@ export default {
         }
     ]
 };
+
+export default initialState;
