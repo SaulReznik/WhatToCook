@@ -31,8 +31,8 @@ const WhatToCook = () => {
     const [processedRecipes, setProcessedRecipes] = useState<IRecipe[]>([]);
 
     // --------------------- Store ----------------------//
-    const products = useSelector((state: any) => state.products);
-    const recipes = useSelector((state: any) => state.recipes);
+    const products: IProduct[] = useSelector((state: any) => state.products) || [];
+    const recipes: IRecipe[] = useSelector((state: any) => state.recipes) || [];
 
     // -------------------- Styles ----------------------//
     const classes = useStyles();
@@ -41,7 +41,7 @@ const WhatToCook = () => {
     // -------------------- Effects ---------------------//
     useEffect(() => {
         const processedRecipes = filterRecipes(activeFilter, products, recipes)
-
+        if (!processedRecipes) return;
         setProcessedRecipes(sortRecipes(activeSortByItem, processedRecipes));
     }, [])
 
