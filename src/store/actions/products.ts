@@ -10,7 +10,7 @@ const changeProductAmount = (payload: IProductAmountAction) => ({
     payload
 });
 
-const deleteProduct = (index: string) => ({
+const deleteProduct = (index: number) => ({
     type: 'DELETE_PRODUCT',
     index
 })

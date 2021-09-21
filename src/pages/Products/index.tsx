@@ -115,7 +115,7 @@ const Products = () => {
               />
               <button
                 className={deleteBtn}
-                onClick={() => dispatch(deleteProduct(`${index}`))}
+                onClick={() => dispatch(deleteProduct(index))}
               >
                 Delete
               </button>
