@@ -25,14 +25,21 @@ const useStyles = createUseStyles({
         }
     },
     body: {
-        textAlign: 'center',
-        backgroundColor: 'rgb(248, 98, 43)',
-        height: '100%',
         width: '75%',
+        padding: 5,
+        textAlign: 'center',
         overflowY: 'auto',
         overflowX: 'auto',
         boxSizing: 'border-box'
-    }
+    },
+    '@media screen and (max-width: 720px)': {
+        app: {
+            display: 'grid',
+        },
+        body: {
+            width: '100%'
+        }
+      },
 });
 
 export default useStyles;
