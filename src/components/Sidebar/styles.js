@@ -10,7 +10,8 @@ const useStyles = createUseStyles({
         '@global': {
             a: {
                 color: 'inherit',
-                textDecoration: 'none'
+                textDecoration: 'none',
+                marginBottom: 5,
             }
         }
     },
