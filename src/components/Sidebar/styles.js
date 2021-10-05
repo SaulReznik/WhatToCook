@@ -32,7 +32,7 @@ const useStyles = createUseStyles({
         justifyContent: 'center',
         border: [1, 'solid', 'black'],
         padding: [10, 0],
-        margin: [3]
+        margin: 3
     }
 });
 
