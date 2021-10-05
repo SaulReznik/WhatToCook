@@ -1,10 +1,18 @@
-export default (filter, products, recipes) => {
+import { IProduct, IRecipe } from "store/types";
+
+interface IAvailableProducts {
+    [key: string]: IProduct
+}
+
+export default (filter: string, products: IProduct[], recipes: IRecipe[]) => {
     if (filter === "all") {
         return recipes;
-    } else if (filter === "available products") {
+    }
+
+    if (filter === "available products") {
         //Creating object where the keys will be the names of products
         //And the values are the product objects
-        const productsObj = products.reduce((currObj, item) => {
+        const productsObj = products.reduce((currObj: IAvailableProducts, item) => {
             currObj[item.name] = item;
             return currObj;
         }, {});
@@ -31,4 +39,6 @@ export default (filter, products, recipes) => {
         });
         return result
     }
+
+    return recipes;
 }
