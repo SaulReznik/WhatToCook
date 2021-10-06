@@ -13,16 +13,20 @@ const useStyles = createUseStyles({
         }
     },
     enterNewProductBtn: {
-        fontSize: '25',
         fontFamily: ['Lexend Deca', 'sans-serif'],
         border: 'none',
-        borderRadius: 10,
+        borderRadius: 5,
         margin: 5,
         padding: 10,
-        backgroundColor: 'rgb(233, 33, 33)',
+        backgroundColor: '#218c74',
+        color: '#ffffff',
+        fontSize: '1rem',
         '&:active': {
-            backgroundColor: 'rgb(255, 0, 0)',
+            backgroundColor: '#218c74',
             border: 'none'
+        },
+        '&:hover': {
+            backgroundColor: '#176251'
         }
     },
     inputsContainer: {
@@ -31,7 +35,7 @@ const useStyles = createUseStyles({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'rgb(255, 175, 1)',
+        backgroundColor: '#d1ccc0',
         '& *': {
             height: 40,
             boxSizing: 'border-box'
@@ -47,12 +51,12 @@ const useStyles = createUseStyles({
     },
     productInput: {
         width: '40%',
-        padding: 5,
-        borderRadius: [[5, 0, 0, 5]],
-        fontSize: '1rem',
-        border: 'none',
-        boxSizing: 'border-box',
         height: 40,
+        padding: 5,
+        borderRadius: [5, 0, 0, 5],
+        fontSize: '1rem',
+        border: [1, 'solid', '#000000'],
+        boxSizing: 'border-box',
         fontFamily: ['Lexend Deca', 'sans-serif']
     },
     amountInput: {
@@ -60,18 +64,21 @@ const useStyles = createUseStyles({
         width: 70,
         textAlign: 'center',
         fontSize: '1.5rem',
-        border: [[1, 'solid', 'black']],
-        borderRadius: [[0, 5, 5, 0]],
+        border: [1, 'solid', 'black'],
+        borderRadius: [0, 5, 5, 0],
         boxSizing: 'border-box',
         height: 40,
-        fontFamily: ['Lexend Deca', 'sans-serif']
+        fontFamily: ['Lexend Deca', 'sans-serif'],
+        borderLeft: 'none'
     },
     submitBtn: {
         display: 'inline-block',
         marginLeft: 30,
         border: 'none',
         borderRadius: 5,
-        backgroundColor: 'rgb(233, 33, 33)',
+        backgroundColor: '#218c74',
+        fontSize: '1rem',
+        color: '#ffffff',
         fontFamily: ['Lexend Deca', 'sans-serif']
     },
     productItem: {
@@ -80,17 +87,23 @@ const useStyles = createUseStyles({
         justifyContent: 'center',
         height: 80,
         width: '100%',
-        margin: [[5, 0]],
-        backgroundColor: 'rgb(0, 117, 102)',
-        boxSizing: 'border-box'
+        borderBottom: [1, 'solid', '#ddd'],
+        boxSizing: 'border-box',
     },
     deleteBtn: {
-        margin: [[0, 20]],
-        height: 30,
+        margin: [0, 20],
         border: 'none',
         borderRadius: 5,
-        fontFamily: ['Lexend Deca', 'sans-serif']
-    }
+        fontFamily: ['Lexend Deca', 'sans-serif'],
+        fontSize: '1rem',
+        backgroundColor: '#b33939',
+        color: '#ffffff',
+        padding: [10, 20],
+        '&:hover': {
+            backgroundColor: '#8d2121'
+        }
+    },
+    
 });
 
 export default useStyles;

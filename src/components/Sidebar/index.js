@@ -12,15 +12,9 @@ const Sidebar = () => {
         <div className={sidebar}>
             <h1>Sidebar</h1>
             <div className={links}>
-                <div className={linkContainer}>
-                    <Link to='/'>What To Cook</Link>
-                </div>
-                <div className={linkContainer}>
-                    <Link to='/products'>Products</Link>
-                </div>
-                <div className={linkContainer}>
-                    <Link to='/recipes'>Recipes</Link>
-                </div>
+                <Link className={linkContainer} to='/'>What To Cook</Link>
+                <Link className={linkContainer} to='/products'>Products</Link>
+                <Link className={linkContainer} to='/recipes'>Recipes</Link>
             </div>
         </div>
     )
