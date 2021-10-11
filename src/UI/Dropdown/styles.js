@@ -7,7 +7,7 @@ const useStyles = createUseStyles({
         textAlign: "left",
     },
     
-    _dropdownItems: {
+    dropdownItemContainer: {
         position: "absolute",
     },
     

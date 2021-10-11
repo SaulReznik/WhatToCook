@@ -1,7 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { IRecipe } from 'store/types';
+import { useState, useCallback } from 'react';
 
-// import '../../styles/UI/Dropdown.css';
 import useStyles from './styles';
 
 interface IDropdown {
@@ -19,7 +17,7 @@ const Dropdown = ({
     
     // -------------------- Styles ----------------------//
     const classes = useStyles();
-    const { dropdownBtn, _dropdownItems, dropdownItem } = classes;
+    const { dropdownBtn, dropdownItemContainer, dropdownItem } = classes;
 
     const toggleDropdown = useCallback(() => {
         setIsOpen(!isOpen)
@@ -33,7 +31,7 @@ const Dropdown = ({
             >
                 {activeItem}
             </button>
-            <div className={_dropdownItems}>
+            <div className={dropdownItemContainer}>
                 {
                     isOpen ?
                         dropdownItems.map((item, index) => (
