@@ -14,8 +14,9 @@ const useStyles = createUseStyles({
         zIndex: 100
     },
     popupContainer: {
-        height: 500,
-        width: 300,
+        maxWidth: 300,
+        maxHeight: 500,
+        padding: [30, 60],
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

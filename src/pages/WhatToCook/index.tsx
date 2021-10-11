@@ -10,6 +10,7 @@ import RecipePopup from '../../components/RecipePopup';
 
 import filterRecipes from '../../functions/filterRecipes';
 import sortRecipes from '../../functions/sortRecipes';
+import { IProduct, IRecipe } from 'store/types';
 
 // -------------- Local Constants ----------------- //
 const filters = [
@@ -23,15 +24,15 @@ const sortByItems = [
 ];
 
 const WhatToCook = () => {
-    const [ isPopupOpen, setIsPopupOpen ] = useState(false);
-    const [ popupContent, setPopupContent ] = useState(null);
-    const [ activeFilter, setActiveFilter] = useState('all');
-    const [ activeSortByItem, setActiveSortByItem ] = useState('names');
-    const [ processedRecipes, setProcessedRecipes ] = useState([]);
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [popupContent, setPopupContent] = useState({});
+    const [activeFilter, setActiveFilter] = useState('all');
+    const [activeSortByItem, setActiveSortByItem] = useState('names');
+    const [processedRecipes, setProcessedRecipes] = useState<IRecipe[]>([]);
 
     // --------------------- Store ----------------------//
-    const products = useSelector(state => state.products);
-    const recipes = useSelector(state => state.recipes);
+    const products: IProduct[] = useSelector((state: any) => state.products) || [];
+    const recipes: IRecipe[] = useSelector((state: any) => state.recipes) || [];
 
     // -------------------- Styles ----------------------//
     const classes = useStyles();
@@ -40,36 +41,36 @@ const WhatToCook = () => {
     // -------------------- Effects ---------------------//
     useEffect(() => {
         const processedRecipes = filterRecipes(activeFilter, products, recipes)
-
+        if (!processedRecipes) return;
         setProcessedRecipes(sortRecipes(activeSortByItem, processedRecipes));
     }, [])
 
     // --------------- Dropdown handlers ----------------//
-    const filterSelect = filter => {
+    const filterSelect = (filter: string) => {
         setActiveFilter(filter);
         setProcessedRecipes(filterRecipes(filter, products, recipes));
     };
 
-    const sortByItemSelect = sortByItem => {
+    const sortByItemSelect = (sortByItem: string) => {
         setActiveSortByItem(sortByItem);
-        setProcessedRecipes(sortRecipes(sortByItem, prevState.processedRecipes));
+        setProcessedRecipes(sortRecipes(sortByItem, processedRecipes));
     };
 
     // ----------------- Popup handlers -----------------//
-    const openPopup = content => {
+    const openPopup = (content: IRecipe) => {
         setIsPopupOpen(true);
         setPopupContent(content);
     };
 
     const cookTodayBtnHandler = useCallback(() => {
         setIsPopupOpen(false);
-    }, [ isPopupOpen ]);
+    }, [isPopupOpen]);
 
     const closePopup = useCallback(e => {
-        if(e.target.className.includes('popupWrapper')){
+        if (e.target.className.includes('popupWrapper')) {
             setIsPopupOpen(false);
-        };   
-    }, [ isPopupOpen ]);
+        };
+    }, [isPopupOpen]);
 
     return (
         <div>
@@ -77,7 +78,7 @@ const WhatToCook = () => {
             <div className={filterSortContainer}>
                 <div className={filterSortItem}>
                     <span>Show: </span>
-                    <Dropdown 
+                    <Dropdown
                         activeItem={activeFilter}
                         dropdownItems={filters}
                         selectHandler={filterSelect}
@@ -85,7 +86,7 @@ const WhatToCook = () => {
                 </div>
                 <div className={filterSortItem}>
                     <span>Sort By: </span>
-                    <Dropdown 
+                    <Dropdown
                         activeItem={activeSortByItem}
                         dropdownItems={sortByItems}
                         selectHandler={sortByItemSelect}
@@ -102,12 +103,12 @@ const WhatToCook = () => {
                 }
             </ol>
             {
-                isPopupOpen ? 
-                <RecipePopup 
-                    recipe={popupContent} 
-                    closePopup={closePopup}
-                    cookTodayBtnHandler={cookTodayBtnHandler}
-                /> : null
+                isPopupOpen ?
+                    <RecipePopup
+                        recipe={popupContent}
+                        closePopup={closePopup}
+                        cookTodayBtnHandler={cookTodayBtnHandler}
+                    /> : null
             }
         </div>
     )

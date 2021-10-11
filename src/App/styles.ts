@@ -28,8 +28,7 @@ const useStyles = createUseStyles({
         width: '75%',
         padding: 5,
         textAlign: 'center',
-        overflowY: 'auto',
-        overflowX: 'auto',
+        overflow: 'auto',
         boxSizing: 'border-box'
     },
     '@media screen and (max-width: 720px)': {

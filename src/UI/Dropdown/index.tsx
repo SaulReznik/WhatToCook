@@ -1,24 +1,29 @@
 import React, { useState, useCallback } from 'react';
+import { IRecipe } from 'store/types';
 
 // import '../../styles/UI/Dropdown.css';
 import useStyles from './styles';
 
-const Dropdown = props => {
+interface IDropdown {
+    activeItem: string;
+    dropdownItems: string[];
+    selectHandler: (filter: string) => void;
+}
+
+const Dropdown = ({
+    activeItem,
+    dropdownItems,
+    selectHandler
+}: IDropdown) => {
+    const [isOpen, setIsOpen] = useState(false);
+    
     // -------------------- Styles ----------------------//
     const classes = useStyles();
     const { dropdownBtn, _dropdownItems, dropdownItem } = classes;
 
-    const [ isOpen, setIsOpen ] = useState(false);
-
     const toggleDropdown = useCallback(() => {
         setIsOpen(!isOpen)
     }, [isOpen]);
-
-    const {
-        activeItem,
-        dropdownItems,
-        selectHandler
-    } = props;
 
     return (
         <div className='dropdownContainer'>
