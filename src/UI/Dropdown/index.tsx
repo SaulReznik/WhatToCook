@@ -1,24 +1,27 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
-// import '../../styles/UI/Dropdown.css';
 import useStyles from './styles';
 
-const Dropdown = props => {
+interface IDropdown {
+    activeItem: string;
+    dropdownItems: string[];
+    selectHandler: (filter: string) => void;
+}
+
+const Dropdown = ({
+    activeItem,
+    dropdownItems,
+    selectHandler
+}: IDropdown) => {
+    const [isOpen, setIsOpen] = useState(false);
+    
     // -------------------- Styles ----------------------//
     const classes = useStyles();
-    const { dropdownBtn, _dropdownItems, dropdownItem } = classes;
-
-    const [ isOpen, setIsOpen ] = useState(false);
+    const { dropdownBtn, dropdownItemContainer, dropdownItem } = classes;
 
     const toggleDropdown = useCallback(() => {
         setIsOpen(!isOpen)
     }, [isOpen]);
-
-    const {
-        activeItem,
-        dropdownItems,
-        selectHandler
-    } = props;
 
     return (
         <div className='dropdownContainer'>
@@ -28,7 +31,7 @@ const Dropdown = props => {
             >
                 {activeItem}
             </button>
-            <div className={_dropdownItems}>
+            <div className={dropdownItemContainer}>
                 {
                     isOpen ?
                         dropdownItems.map((item, index) => (

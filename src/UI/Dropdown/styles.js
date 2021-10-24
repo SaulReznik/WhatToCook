@@ -12,13 +12,13 @@ const useStyles = createUseStyles({
         border: [1, 'solid'],
         borderRadius: 20,
     },
-    
-    _dropdownItems: {
+
+    dropdownItemContainer: {
         position: "absolute",
         width: 200,
         marginLeft: 5,
     },
-    
+
     dropdownItem: {
         height: "inherit",
         textAlign: "left",
@@ -30,7 +30,7 @@ const useStyles = createUseStyles({
             cursor: 'pointer',
             fontWeight: 'bold',
             textDecoration: 'underline',
-          }
+        }
     }
 });
 
