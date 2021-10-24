@@ -2,6 +2,7 @@ import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
   filterSortContainer: {
+    padding: [10, 0],
     width: '100%',
     border: ['1px', 'solid', 'black'],
     display: 'flex',
