@@ -34,7 +34,14 @@ const Recipes = () => {
 
     // ---------------- Styles ---------------- //
     const classes = useStyles();
-    const { addRecipeBtn } = classes;
+    const { 
+        addRecipeBtn,
+        btnRecipes,
+        addRecipe,
+        ingredients,
+        ingredientsContent,
+        recipeList,
+    } = classes;
 
     // -------------- General hendlers ----------//
     const keyDown: React.KeyboardEventHandler = e => setKeyCode(e.keyCode);
@@ -116,23 +123,27 @@ const Recipes = () => {
             <button onClick={toggleAddNewRecipe} className={addRecipeBtn}>Add Recipe</button>
             {
                 isAddRecipeOpen ?
-                    <div id='add-recipe'>
+                    <div id='add-recipe' className={addRecipe}>
                         <div>
-                            <span>Name:</span>
-                            <input
-                                value={newRecipe.name}
-                                onChange={onNewRecipeNameChange}
-                            />
+                            <label>Name:
+                                <input
+                                    value={newRecipe.name}
+                                    onChange={onNewRecipeNameChange}
+                                />
+                            </label >
                         </div>
-                        <div>
-                            <span>Ingredients:</span>
-                            <input value={newRecipeItem.name} onChange={onNewRecipeItemNameChange} />
-                            <input
-                                onChange={onNewRecipeItemAmountChange}
-                                onKeyDown={keyDown}
-                                value={newRecipeItem.amount}
-                                type="number"
-                            />
+                        <div className={ingredients}>
+                            <label>Ingredients:
+                                <div className={ingredientsContent}>
+                                    <input value={newRecipeItem.name} onChange={onNewRecipeItemNameChange} />
+                                    <input
+                                        onChange={onNewRecipeItemAmountChange}
+                                        onKeyDown={keyDown}
+                                        value={newRecipeItem.amount}
+                                        type="number"
+                                    />
+                                </div>
+                            </label>
                             <button onClick={newRecipeItemAddHandler}>Add</button>
                         </div>
                         <ol>
@@ -141,17 +152,19 @@ const Recipes = () => {
                             ))}
                         </ol>
                         <div>
-                            <span>Instructions:</span>
-                            <textarea
-                                value={newRecipe.instructions}
-                                onChange={onNewRecipeInstructionsChange}
-                            />
+                            <label>Instructions:
+                                <textarea
+                                    rows={5}
+                                    value={newRecipe.instructions}
+                                    onChange={onNewRecipeInstructionsChange}
+                                />
+                            </label>
                         </div>
-                        <button onClick={handleAddNewRecipe}>Add New Recipe</button>
+                        <button className={btnRecipes} onClick={handleAddNewRecipe}>Add New Recipe</button>
                     </div>
                     : null
             }
-            <ol>
+            <ol className={recipeList}>
                 {
                     recipes.map((item, index) => (
                         <Recipe
