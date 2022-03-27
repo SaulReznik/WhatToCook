@@ -101,7 +101,7 @@ module.exports = {
             'error',
             {
                 'groups': [
-                    ['module',  'absolute'],
+                    ['module', 'absolute'],
                     '/^(assets|components|configs|store|types|hooks|pages|providers|services|utils|layering|rendering|Routes)/',
                     'parent',
                     'sibling',
