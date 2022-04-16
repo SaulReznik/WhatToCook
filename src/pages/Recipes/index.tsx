@@ -6,7 +6,7 @@ import useStyles from './styles';
 
 import Recipe from '../../components/Recipe';
 
-import { restrictedChars } from '../../constants';
+import { DEFAULT_TEXTAREA_ROWS, restrictedChars } from '../../constants';
 import actions from '../../store/actions';
 import { IRecipe } from 'store/types';
 
@@ -34,7 +34,6 @@ const Recipes = () => {
 
     // ---------------- Styles ---------------- //
     const classes = useStyles();
-    const { addRecipeBtn } = classes;
 
     // -------------- General hendlers ----------//
     const keyDown: React.KeyboardEventHandler = e => setKeyCode(e.keyCode);
@@ -113,26 +112,30 @@ const Recipes = () => {
     return (
         <div className="recipes">
             <h1>Recipes</h1>
-            <button onClick={toggleAddNewRecipe} className={addRecipeBtn}>Add Recipe</button>
+            <button onClick={toggleAddNewRecipe} className={classes.addRecipeBtn}>Add Recipe</button>
             {
                 isAddRecipeOpen ?
-                    <div id='add-recipe'>
+                    <div id='add-recipe' className={classes.addRecipe}>
                         <div>
-                            <span>Name:</span>
-                            <input
-                                value={newRecipe.name}
-                                onChange={onNewRecipeNameChange}
-                            />
+                            <label>Name:
+                                <input
+                                    value={newRecipe.name}
+                                    onChange={onNewRecipeNameChange}
+                                />
+                            </label >
                         </div>
-                        <div>
-                            <span>Ingredients:</span>
-                            <input value={newRecipeItem.name} onChange={onNewRecipeItemNameChange} />
-                            <input
-                                onChange={onNewRecipeItemAmountChange}
-                                onKeyDown={keyDown}
-                                value={newRecipeItem.amount}
-                                type="number"
-                            />
+                        <div className={classes.ingredients}>
+                            <label>Ingredients:
+                                <div className={classes.ingredientsContent}>
+                                    <input value={newRecipeItem.name} onChange={onNewRecipeItemNameChange} />
+                                    <input
+                                        onChange={onNewRecipeItemAmountChange}
+                                        onKeyDown={keyDown}
+                                        value={newRecipeItem.amount}
+                                        type="number"
+                                    />
+                                </div>
+                            </label>
                             <button onClick={newRecipeItemAddHandler}>Add</button>
                         </div>
                         <ol>
@@ -141,17 +144,19 @@ const Recipes = () => {
                             ))}
                         </ol>
                         <div>
-                            <span>Instructions:</span>
-                            <textarea
-                                value={newRecipe.instructions}
-                                onChange={onNewRecipeInstructionsChange}
-                            />
+                            <label>Instructions:
+                                <textarea
+                                    rows={DEFAULT_TEXTAREA_ROWS}
+                                    value={newRecipe.instructions}
+                                    onChange={onNewRecipeInstructionsChange}
+                                />
+                            </label>
                         </div>
-                        <button onClick={handleAddNewRecipe}>Add New Recipe</button>
+                        <button className={classes.btnRecipes} onClick={handleAddNewRecipe}>Add New Recipe</button>
                     </div>
                     : null
             }
-            <ol>
+            <ol className={classes.recipeList}>
                 {
                     recipes.map((item, index) => (
                         <Recipe
