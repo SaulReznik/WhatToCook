@@ -19,7 +19,6 @@ const useStyles = createUseStyles({
         backgroundColor: '#8d2121',
       },
     },
-
     btnRecipes: {
       color: '#ffffff',
       border: 'none',
@@ -33,7 +32,6 @@ const useStyles = createUseStyles({
         backgroundColor: '#16604f',
       }
     },
-
     addRecipe: {
       width: '50%',
       minWidth: 255,
@@ -63,7 +61,6 @@ const useStyles = createUseStyles({
         boxSizing: 'border-box'
       },
     },
-
     ingredients: {
       '& input': {
         width: '80%'
@@ -86,15 +83,12 @@ const useStyles = createUseStyles({
         }
       }
     },
-
     ingredientsContent: {
       display: 'flex'
     },
-
     recipeList: {
       textAlign: 'start',
     }
-
 });
 
 export default useStyles;
