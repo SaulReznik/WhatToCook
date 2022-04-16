@@ -93,12 +93,6 @@ const useStyles = createUseStyles({
 
     recipeList: {
       textAlign: 'start',
-      '& li': {
-        paddingLeft: 5,
-        '& ol': {
-          paddingLeft: 0
-        }
-      }
     }
 
 });

@@ -6,7 +6,7 @@ import useStyles from './styles';
 
 import Recipe from '../../components/Recipe';
 
-import { restrictedChars } from '../../constants';
+import { DEFAULT_TEXTAREA_ROWS, restrictedChars } from '../../constants';
 import actions from '../../store/actions';
 import { IRecipe } from 'store/types';
 
@@ -34,14 +34,6 @@ const Recipes = () => {
 
     // ---------------- Styles ---------------- //
     const classes = useStyles();
-    const { 
-        addRecipeBtn,
-        btnRecipes,
-        addRecipe,
-        ingredients,
-        ingredientsContent,
-        recipeList,
-    } = classes;
 
     // -------------- General hendlers ----------//
     const keyDown: React.KeyboardEventHandler = e => setKeyCode(e.keyCode);
@@ -120,10 +112,10 @@ const Recipes = () => {
     return (
         <div className="recipes">
             <h1>Recipes</h1>
-            <button onClick={toggleAddNewRecipe} className={addRecipeBtn}>Add Recipe</button>
+            <button onClick={toggleAddNewRecipe} className={classes.addRecipeBtn}>Add Recipe</button>
             {
                 isAddRecipeOpen ?
-                    <div id='add-recipe' className={addRecipe}>
+                    <div id='add-recipe' className={classes.addRecipe}>
                         <div>
                             <label>Name:
                                 <input
@@ -132,9 +124,9 @@ const Recipes = () => {
                                 />
                             </label >
                         </div>
-                        <div className={ingredients}>
+                        <div className={classes.ingredients}>
                             <label>Ingredients:
-                                <div className={ingredientsContent}>
+                                <div className={classes.ingredientsContent}>
                                     <input value={newRecipeItem.name} onChange={onNewRecipeItemNameChange} />
                                     <input
                                         onChange={onNewRecipeItemAmountChange}
@@ -154,17 +146,17 @@ const Recipes = () => {
                         <div>
                             <label>Instructions:
                                 <textarea
-                                    rows={5}
+                                    rows={DEFAULT_TEXTAREA_ROWS}
                                     value={newRecipe.instructions}
                                     onChange={onNewRecipeInstructionsChange}
                                 />
                             </label>
                         </div>
-                        <button className={btnRecipes} onClick={handleAddNewRecipe}>Add New Recipe</button>
+                        <button className={classes.btnRecipes} onClick={handleAddNewRecipe}>Add New Recipe</button>
                     </div>
                     : null
             }
-            <ol className={recipeList}>
+            <ol className={classes.recipeList}>
                 {
                     recipes.map((item, index) => (
                         <Recipe
