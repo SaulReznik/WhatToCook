@@ -4,7 +4,7 @@ export const products = (state = [], action: Record<string, any>) => {
     case 'ADD_NEW_PRODUCT':
       return [
         ...state,
-        action.product
+        action.product,
       ];
     case 'CHANGE_PRODUCT_AMOUNT':
       const { amount, index } = action.payload;
@@ -18,4 +18,4 @@ export const products = (state = [], action: Record<string, any>) => {
     default:
       return state;
   }
-}
+};

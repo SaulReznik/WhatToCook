@@ -7,19 +7,19 @@ const useStyles = createUseStyles({
     display: 'flex',
     alignItems: 'flex-start',
     justifyContent: 'space-around',
-    padding: 5
+    padding: 5,
   },
   filterSortItem: {
     display: 'flex',
     flexFlow: 'row',
     alignItems: 'center',
   },
-  
+
   '@media (max-width: 720px)': {
     filterSortItem: {
-      flexFlow: 'column'
-    }
-  }
+      flexFlow: 'column',
+    },
+  },
 });
 
 export default useStyles;

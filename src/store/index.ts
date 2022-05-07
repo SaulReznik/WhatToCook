@@ -1,9 +1,9 @@
 import {
-    createStore,
-    combineReducers,
-    compose,
-    applyMiddleware
-} from "redux";
+  createStore,
+  combineReducers,
+  compose,
+  applyMiddleware,
+} from 'redux';
 import thunk from 'redux-thunk';
 
 import reducers from './reducers';
@@ -15,14 +15,12 @@ declare global {
     }
 }
 
-const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] as typeof compose || compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ as typeof compose || compose;
 
-const configureStore = () => {
-    return createStore(
-        combineReducers(reducers),
+const configureStore = () => createStore(
+  combineReducers(reducers),
         initialState as any,
-        composeEnhancers(applyMiddleware(thunk))
-    );
-};
+        composeEnhancers(applyMiddleware(thunk)),
+);
 
 export default configureStore;
